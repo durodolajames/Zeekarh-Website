@@ -267,7 +267,7 @@ function EditorialPageShell({
           background:
             radial-gradient(circle at 85% 20%, rgba(61,122,69,0.2) 0%, rgba(61,122,69,0) 34%),
             linear-gradient(180deg, #1a2e1c 0%, #233926 100%);
-          padding: 7.2rem 2rem 3.2rem;
+          padding: 5.6rem 2rem 2rem;
         }
         .editorial-hero-inner {
           position: relative;
@@ -302,7 +302,7 @@ function EditorialPageShell({
           color: rgba(245,222,200,0.52);
         }
         .editorial-card-wrap {
-          margin-top: -1.25rem;
+          margin-top: -0.6rem;
           padding: 0 2rem 3.6rem;
           position: relative;
           z-index: 2;
@@ -383,11 +383,11 @@ function EditorialPageShell({
         }
         @media (max-width: 640px) {
           .editorial-hero {
-            padding: 6.5rem 1.25rem 2.6rem;
+            padding: 5rem 1.25rem 1.6rem;
           }
           .editorial-card-wrap {
             padding: 0 1rem 2.8rem;
-            margin-top: -1rem;
+            margin-top: -0.5rem;
           }
           .editorial-card-header {
             padding: 1.4rem 1.25rem 0;
@@ -402,9 +402,9 @@ function EditorialPageShell({
         <div className="editorial-hero">
           <DecorativeHeroCircles />
           <div className="editorial-hero-inner">
-            <AnimBlock><p className="editorial-eyebrow">{eyebrow}</p></AnimBlock>
-            <AnimBlock delay="d1"><h1 className="editorial-title">{title}</h1></AnimBlock>
-            <AnimBlock delay="d2"><p className="editorial-intro">{intro}</p></AnimBlock>
+            <p className="editorial-eyebrow">{eyebrow}</p>
+            <h1 className="editorial-title">{title}</h1>
+            <p className="editorial-intro">{intro}</p>
           </div>
         </div>
 
@@ -738,8 +738,8 @@ function HomePage({ setPage }) {
   }, []);
 
   const stats = [
-    { num: "100+", label: "Happy clients" },
-    { num: "15+", label: "Treatments offered" },
+    { num: "600+", label: "Happy clients" },
+    { num: "200+", label: "Treatments offered" },
     { num: "5★", label: "Client experience" },
   ];
 
@@ -1717,6 +1717,14 @@ function AboutPage({ setPage }) {
           background: #2a3e2c;
           display: flex; align-items: center; justify-content: center;
           position: relative; min-height: 400px;
+          overflow: hidden;
+        }
+        .about-hero-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+          display: block;
         }
         .photo-placeholder {
           display: flex; flex-direction: column; align-items: center;
@@ -1757,44 +1765,134 @@ function AboutPage({ setPage }) {
           font-family: 'Playfair Display', serif;
           font-size: 1.05rem; font-weight: 400; color: #1a2e1c; line-height: 1.3;
         }
-        .philosophy-section { background: #F5DEC8; padding: 6rem 2rem; text-align: center; }
-        .phil-inner { max-width: 620px; margin: 0 auto; }
+        .philosophy-section {
+          background:
+            radial-gradient(circle at 14% 18%, rgba(61,122,69,0.18) 0%, rgba(61,122,69,0) 36%),
+            radial-gradient(circle at 88% 82%, rgba(45,94,52,0.16) 0%, rgba(45,94,52,0) 42%),
+            #F5DEC8;
+          padding: 6.5rem 2rem;
+          position: relative;
+          overflow: hidden;
+        }
+        .phil-orb {
+          position: absolute;
+          border-radius: 999px;
+          border: 1px solid rgba(61,122,69,0.12);
+          pointer-events: none;
+        }
+        .phil-orb.a {
+          width: 230px;
+          height: 230px;
+          left: -78px;
+          top: -62px;
+        }
+        .phil-orb.b {
+          width: 170px;
+          height: 170px;
+          right: -52px;
+          bottom: 30px;
+        }
+        .phil-inner {
+          max-width: 900px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 1;
+        }
+        .phil-panel {
+          background: rgba(255,248,242,0.72);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(61,122,69,0.14);
+          border-radius: 28px;
+          box-shadow: 0 24px 70px rgba(26,46,28,0.12);
+          padding: 2.5rem 2.2rem;
+          text-align: left;
+          display: grid;
+          gap: 1.25rem;
+        }
+        .phil-kicker {
+          font-size: 0.62rem;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: #3D7A45;
+          font-weight: 400;
+        }
+        .phil-title {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+          line-height: 1.2;
+          color: #1a2e1c;
+          font-style: italic;
+          font-weight: 400;
+        }
+        .phil-body {
+          font-size: 0.9rem;
+          line-height: 1.95;
+          color: #4a5e4b;
+          font-weight: 300;
+          max-width: 740px;
+        }
+        .phil-cta-row {
+          margin-top: 0.45rem;
+        }
+        .phil-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.55rem;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.72rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #F5DEC8;
+          background: linear-gradient(135deg, #1a2e1c 0%, #2d5e34 100%);
+          border: 1px solid rgba(61,122,69,0.35);
+          border-radius: 999px;
+          padding: 0.95rem 2.2rem;
+          cursor: pointer;
+          box-shadow: 0 12px 28px rgba(26,46,28,0.2);
+          transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        .phil-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 16px 32px rgba(26,46,28,0.26);
+          filter: brightness(1.06);
+        }
+        .phil-btn-mark {
+          opacity: 0.72;
+          font-size: 0.72rem;
+        }
         @media (max-width: 768px) {
           .about-hero { grid-template-columns: 1fr; }
           .about-hero-photo { min-height: 280px; }
           .about-hero-content { padding: 3rem 2rem; }
           .creds-inner { grid-template-columns: 1fr 1fr; }
           .cred-item:nth-child(3) { border-left: none; }
+          .philosophy-section { padding: 4.5rem 1rem; }
+          .phil-panel { padding: 1.7rem 1.25rem; border-radius: 22px; }
+          .phil-body { font-size: 0.86rem; }
         }
       `}</style>
 
       <section className="about-hero" style={{ paddingTop: "5rem" }}>
         <div className="about-hero-photo">
-          <div className="photo-placeholder">
-            <div className="photo-ring">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3D7A45" strokeWidth="1.5">
-                <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-              </svg>
-            </div>
-            <p className="photo-hint-text">Add your<br />photo here</p>
-          </div>
+          <img src="/images/Zee.jpg" alt="Ngozi - Founder and Lead Aesthetician at Zeekarh Cosmetics" />
         </div>
         <div className="about-hero-content">
-          <p style={{ fontSize: "0.6rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(245,222,200,0.35)", fontWeight: 300, marginBottom: "1.2rem" }}>Meet the founder</p>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(2.2rem,4vw,3.5rem)", fontWeight: 400, color: "#F5DEC8", lineHeight: 1.15, marginBottom: "0.5rem" }}>Your Name Here</h1>
-          <p style={{ fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#3D7A45", fontWeight: 300, marginBottom: "1.8rem" }}>Founder & Lead Skin Therapist</p>
+          <p style={{ fontSize: "0.6rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(245,222,200,0.35)", fontWeight: 300, marginBottom: "1.2rem" }}>Meet your aesthetician</p>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(2.2rem,4vw,3.5rem)", fontWeight: 400, color: "#F5DEC8", lineHeight: 1.15, marginBottom: "0.5rem" }}>Hi there! I'm Ngozi (your skin's best friend).</h1>
+          <p style={{ fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#3D7A45", fontWeight: 300, marginBottom: "1.8rem" }}>Founder & Lead Aesthetician</p>
           <div style={{ width: 32, height: 1, background: "rgba(245,222,200,0.15)", marginBottom: "1.8rem" }} />
-          <p style={{ fontSize: "0.88rem", fontWeight: 300, lineHeight: 1.95, color: "rgba(245,222,200,0.55)", maxWidth: 420 }}>Add your personal bio here — your background, how you got into skincare, what drives your passion for the work, and what makes Zeekarh Cosmetics different.</p>
+          <p style={{ fontSize: "0.88rem", fontWeight: 300, lineHeight: 1.95, color: "rgba(245,222,200,0.55)", maxWidth: 420, marginBottom: "1rem" }}>I'm an Aesthetician based in Leeds, UK. I don't just treat skin - I help you understand it. I specialise in the management of inflammatory conditions like acne, rosacea, and pigmentation.</p>
+          <p style={{ fontSize: "0.88rem", fontWeight: 300, lineHeight: 1.95, color: "rgba(245,222,200,0.55)", maxWidth: 420 }}>Whether we're meeting for an in-person treatment or an online consultation, my goal is to cut through the noise of the retail market and build a tailored skincare routine and treatment plan that actually work for your unique concerns.</p>
         </div>
       </section>
 
       <div className="about-creds">
         <div className="creds-inner">
           {[
-            { label: "Qualification", val: "Add qualification here" },
-            { label: "Specialisation", val: "Advanced Skin Treatments" },
-            { label: "Experience", val: "X+ Years in Clinical Skincare" },
-            { label: "Based in", val: "Add location here" },
+            { label: "Role", val: "Founder & Lead Aesthetician" },
+            { label: "Specialisation", val: "Acne, Rosacea & Pigmentation" },
+            { label: "Experience", val: "6+ Years in Clinical Skincare" },
+            { label: "Based in", val: "Leeds, United Kingdom" },
           ].map(c => (
             <AnimBlock key={c.label}>
               <div className="cred-item">
@@ -1807,13 +1905,21 @@ function AboutPage({ setPage }) {
       </div>
 
       <section className="philosophy-section">
+        <div className="phil-orb a" aria-hidden="true" />
+        <div className="phil-orb b" aria-hidden="true" />
         <div className="phil-inner">
-          <AnimBlock><p className="section-eyebrow">The philosophy</p></AnimBlock>
-          <AnimBlock delay="d1"><h2 className="section-h2">Skincare rooted in science, delivered with care.</h2></AnimBlock>
-          <AnimBlock delay="d2"><p className="section-body">At Zeekarh Cosmetics, every treatment is approached with clinical precision and a deep respect for the skin's natural intelligence. The goal is never to mask — it's to understand, restore, and elevate. Each client receives a bespoke experience built around their unique skin profile, lifestyle, and goals.</p></AnimBlock>
-          <AnimBlock delay="d3" style={{ marginTop: "2.5rem" }}>
-            <button className="btn-solid" onClick={() => setPage("contact")}>Book a consultation</button>
-          </AnimBlock>
+          <div className="phil-panel">
+            <AnimBlock><p className="phil-kicker">The philosophy</p></AnimBlock>
+            <AnimBlock delay="d1"><h2 className="phil-title">Skincare rooted in science, delivered with care.</h2></AnimBlock>
+            <AnimBlock delay="d2"><p className="phil-body">At Zeekarh Cosmetics, every treatment is approached with clinical precision and a deep respect for the skin's natural intelligence. The goal is never to mask - it's to understand, restore, and elevate. Each client receives a bespoke experience built around their unique skin profile, lifestyle, and goals.</p></AnimBlock>
+            <AnimBlock delay="d3" className="phil-cta-row">
+              <button className="phil-btn" onClick={() => setPage("contact")}>
+                <span className="phil-btn-mark">✦</span>
+                Book a consultation
+                <span className="phil-btn-mark">✦</span>
+              </button>
+            </AnimBlock>
+          </div>
         </div>
       </section>
     </>
@@ -1888,6 +1994,36 @@ function ServicesPage({ setPage }) {
         .svc-duration { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #4a5e4b; font-weight: 300; }
         .svc-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: #1a2e1c; }
         .svcs-cta-section { background: #1a2e1c; padding: 5rem 2rem; text-align: center; }
+        .services-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.55rem;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.72rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #F5DEC8;
+          background: linear-gradient(135deg, #3D7A45 0%, #2d5e34 100%);
+          border: 1px solid rgba(245,222,200,0.28);
+          border-radius: 999px;
+          padding: 1rem 2.5rem;
+          cursor: pointer;
+          box-shadow: 0 14px 30px rgba(0,0,0,0.28), 0 0 0 1px rgba(245,222,200,0.08) inset;
+          transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        .services-cta-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 18px 34px rgba(0,0,0,0.32), 0 0 0 1px rgba(245,222,200,0.18) inset;
+          filter: brightness(1.05);
+        }
+        .services-cta-btn:active {
+          transform: translateY(0);
+        }
+        .services-cta-btn-mark {
+          font-size: 0.74rem;
+          opacity: 0.72;
+        }
         @media (max-width: 900px) { .svcs-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 600px) { .svcs-grid { grid-template-columns: 1fr; } }
       `}</style>
@@ -1930,7 +2066,11 @@ function ServicesPage({ setPage }) {
         <AnimBlock delay="d1"><h2 style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(1.8rem,3.5vw,2.8rem)", color: "#F5DEC8", marginBottom: "1rem", fontWeight: 400 }}>Let us guide you.</h2></AnimBlock>
         <AnimBlock delay="d2"><p style={{ fontSize: "0.85rem", fontWeight: 300, color: "rgba(245,222,200,0.45)", lineHeight: 1.9, marginBottom: "2rem", maxWidth: 460, margin: "0 auto 2rem" }}>Start with a consultation and we'll build a treatment plan designed around your skin's specific needs and goals.</p></AnimBlock>
         <AnimBlock delay="d3">
-          <button className="btn-solid" onClick={() => setPage("contact")}>Book a consultation</button>
+          <button className="services-cta-btn" onClick={() => setPage("contact")}>
+            <span className="services-cta-btn-mark">✦</span>
+            Book a consultation
+            <span className="services-cta-btn-mark">✦</span>
+          </button>
         </AnimBlock>
       </section>
     </>
@@ -1939,14 +2079,8 @@ function ServicesPage({ setPage }) {
 
 // ─── CONTACT ───────────────────────────────────────────────────────────────
 function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", concern: "", message: "" });
-  const [sent, setSent] = useState(false);
-
-  const concerns = ["Acne & Breakouts", "Hyperpigmentation", "Anti-ageing", "Dull / Uneven skin", "Scars", "Sensitive Skin", "General skincare", "Other"];
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setSent(true);
+  function handleBookNow() {
+    window.open("https://www.fresha.com/book-now/zeekarh-cosmetics-rw9b4t2o/services?lid=2601580&eid=4582419&share=true&pId=2519631", "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -1954,7 +2088,7 @@ function ContactPage() {
       <style>{`
         .contact-page { min-height: 100svh; background: #1a2e1c; }
         .contact-hero { padding: 9rem 2rem 5rem; text-align: center; border-bottom: 1px solid rgba(245,222,200,0.06); }
-        .contact-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; padding: 5rem 2rem; }
+        .contact-grid { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1.35fr 1.25fr; gap: 5rem; padding: 5rem 2rem; }
         .contact-info { display: flex; flex-direction: column; gap: 2.5rem; }
         .contact-block { display: flex; flex-direction: column; gap: 0.5rem; }
         .contact-lbl { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(245,222,200,0.3); font-weight: 300; margin-bottom: 0.3rem; }
@@ -1974,45 +2108,117 @@ function ContactPage() {
           border-color: rgba(245,222,200,0.45);
           background: rgba(245,222,200,0.08);
         }
-        .form-card { background: rgba(245,222,200,0.04); border: 1px solid rgba(245,222,200,0.08); border-radius: 20px; padding: 2.5rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
-        .form-label { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245,222,200,0.35); font-weight: 300; }
-        .form-input, .form-select, .form-textarea {
-          background: rgba(255,255,255,0.04); border: 1px solid rgba(245,222,200,0.1);
-          border-radius: 10px; padding: 0.85rem 1rem;
-          font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 300;
-          color: rgba(245,222,200,0.8); outline: none;
-          transition: border-color 0.3s, background 0.3s;
+        .booking-card {
+          background: rgba(245,222,200,0.04);
+          border: 1px solid rgba(245,222,200,0.08);
+          border-radius: 24px;
+          padding: 1.45rem;
+          min-height: 100%;
+        }
+        .booking-image-wrap {
+          width: 78%;
+          margin: 0 auto 1.15rem;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid rgba(245,222,200,0.12);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.24);
+        }
+        .booking-image {
           width: 100%;
+          display: block;
+          aspect-ratio: 5/4;
+          object-fit: cover;
+          object-position: center top;
         }
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-          border-color: rgba(61,122,69,0.5); background: rgba(255,255,255,0.06);
-        }
-        .form-select option { background: #1a2e1c; }
-        .form-textarea { resize: vertical; min-height: 110px; }
-        .form-submit {
-          width: 100%; padding: 1rem;
-          font-family: 'Montserrat', sans-serif; font-size: 0.7rem;
-          letter-spacing: 0.18em; text-transform: uppercase;
-          background: #3D7A45; color: white; border: none;
-          border-radius: 100px; cursor: pointer; font-weight: 400;
+        .booking-btn {
+          width: 100%;
+          padding: 1rem;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.76rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          background: #3D7A45;
+          color: white;
+          border: none;
+          border-radius: 100px;
+          cursor: pointer;
+          font-weight: 400;
           transition: background 0.3s, transform 0.2s;
         }
-        .form-submit:hover { background: #2d5e34; transform: translateY(-1px); }
-        .success-state {
-          text-align: center; padding: 3rem;
-          display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+        .booking-btn:hover { background: #2d5e34; transform: translateY(-1px); }
+        .contact-note-card {
+          background: rgba(245,222,200,0.05);
+          border: 1px solid rgba(245,222,200,0.12);
+          border-radius: 20px;
+          padding: 1.4rem;
         }
-        .success-icon {
-          width: 56px; height: 56px; border-radius: 50%;
-          background: rgba(61,122,69,0.15); border: 1px solid rgba(61,122,69,0.3);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1.6rem;
+        .contact-note-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.45rem;
+          font-style: italic;
+          font-weight: 400;
+          color: rgba(245,222,200,0.9);
+          margin-bottom: 0.8rem;
+        }
+        .contact-note-text {
+          font-size: 0.9rem;
+          font-weight: 300;
+          line-height: 1.85;
+          color: rgba(245,222,200,0.62);
+        }
+        .contact-note-list {
+          margin: 0.9rem 0 0.8rem 1.1rem;
+          display: grid;
+          gap: 0.5rem;
+        }
+        .contact-note-list li {
+          font-size: 0.88rem;
+          font-weight: 300;
+          line-height: 1.75;
+          color: rgba(245,222,200,0.66);
+        }
+        .contact-fee-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 0.7rem;
+          margin: 0.9rem 0;
+        }
+        .contact-fee-chip {
+          border: 1px solid rgba(245,222,200,0.14);
+          background: rgba(245,222,200,0.03);
+          border-radius: 12px;
+          padding: 0.7rem 0.9rem;
+          text-align: center;
+        }
+        .contact-fee-country {
+          display: block;
+          font-size: 0.74rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: rgba(245,222,200,0.42);
+          margin-bottom: 0.2rem;
+        }
+        .contact-fee-value {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.12rem;
+          color: rgba(245,222,200,0.9);
+        }
+        .contact-note-highlight {
+          margin-top: 0.8rem;
+          padding: 0.8rem 0.9rem;
+          border-radius: 12px;
+          background: rgba(61,122,69,0.18);
+          border: 1px solid rgba(61,122,69,0.34);
+          color: rgba(245,222,200,0.92);
+          font-size: 0.9rem;
+          line-height: 1.75;
+          font-weight: 300;
         }
         @media (max-width: 900px) {
           .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem; }
-          .form-row { grid-template-columns: 1fr; }
+          .booking-card { max-width: 500px; margin: 0 auto; }
+          .booking-image-wrap { width: 72%; }
+          .contact-fee-grid { grid-template-columns: 1fr; }
         }
       `}</style>
 
@@ -2026,20 +2232,36 @@ function ContactPage() {
         <div className="contact-grid">
           <AnimBlock>
             <div className="contact-info">
-              <div className="contact-block">
-                <p className="contact-lbl">Consultation</p>
-                <p className="contact-val">Virtual — worldwide</p>
-                <p className="contact-sub-val">60-min comprehensive skin analysis available for UK, US & Nigeria.</p>
-              </div>
-              <div className="contact-block">
-                <p className="contact-lbl">Pricing</p>
-                <p className="contact-val">£70 · $87 · ₦100k</p>
-                <p className="contact-sub-val">£20 credited towards your first in-clinic treatment.</p>
-              </div>
-              <div className="contact-block">
-                <p className="contact-lbl">Booking</p>
-                <p className="contact-val">By appointment only</p>
-                <p className="contact-sub-val">Fill in the form and we'll confirm your slot within 24 hours.</p>
+              <div className="contact-note-card">
+                <h2 className="contact-note-title">Please Read Before Booking</h2>
+                <p className="contact-note-text">This is a virtual skincare consultation, so kindly ensure you're in a quiet space with good lighting for the best experience.</p>
+
+                <p className="contact-note-text" style={{ marginTop: "0.8rem" }}>The consultation includes:</p>
+                <ul className="contact-note-list">
+                  <li>A comprehensive skin analysis</li>
+                  <li>An 8-month personalized skincare routine/guide</li>
+                  <li>Product recommendations tailored to your skin type, concerns, and budget</li>
+                  <li>Guidance on where to purchase the right products</li>
+                </ul>
+
+                <p className="contact-note-text" style={{ marginTop: "0.8rem" }}>Consultation Fee:</p>
+                <div className="contact-fee-grid">
+                  <div className="contact-fee-chip">
+                    <span className="contact-fee-country">🇬🇧 UK</span>
+                    <span className="contact-fee-value">£70</span>
+                  </div>
+                  <div className="contact-fee-chip">
+                    <span className="contact-fee-country">🇺🇸 US</span>
+                    <span className="contact-fee-value">$87</span>
+                  </div>
+                  <div className="contact-fee-chip">
+                    <span className="contact-fee-country">🇳🇬 NG</span>
+                    <span className="contact-fee-value">₦100,000</span>
+                  </div>
+                </div>
+
+                <p className="contact-note-highlight">✨ If you decide to book an in-clinic treatment afterwards, £20 from your consultation fee will be credited towards your treatment.</p>
+                <p className="contact-note-text" style={{ marginTop: "0.9rem" }}>To get the most out of your session, please have a list or clear photos of all the skincare products you're currently using.</p>
               </div>
               <div className="contact-block">
                 <p className="contact-lbl">Connect</p>
@@ -2063,40 +2285,11 @@ function ContactPage() {
           </AnimBlock>
 
           <AnimBlock delay="d2">
-            <div className="form-card">
-              {sent ? (
-                <div className="success-state">
-                  <div className="success-icon">✓</div>
-                  <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", fontStyle: "italic", color: "rgba(245,222,200,0.8)" }}>Message received.</p>
-                  <p style={{ fontSize: "0.8rem", fontWeight: 300, color: "rgba(245,222,200,0.4)", lineHeight: 1.8 }}>We'll be in touch within 24 hours to confirm your consultation booking.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontStyle: "italic", fontWeight: 400, color: "rgba(245,222,200,0.8)", marginBottom: "1.8rem" }}>Book a consultation</p>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label className="form-label">Full name</label>
-                      <input required className="form-input" placeholder="Your name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label">Email</label>
-                      <input required type="email" className="form-input" placeholder="your@email.com" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Main skin concern</label>
-                    <select required className="form-select" value={form.concern} onChange={e => setForm(f => ({ ...f, concern: e.target.value }))}>
-                      <option value="">Select a concern</option>
-                      {concerns.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Anything else? (optional)</label>
-                    <textarea className="form-textarea" placeholder="Tell us about your skin, current routine, or any questions..." value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} />
-                  </div>
-                  <button type="submit" className="form-submit">Send enquiry →</button>
-                </form>
-              )}
+            <div className="booking-card">
+              <div className="booking-image-wrap">
+                <img className="booking-image" src="/images/Zee.jpg" alt="Zee - Lead Aesthetician" />
+              </div>
+              <button className="booking-btn" onClick={handleBookNow}>Book now</button>
             </div>
           </AnimBlock>
         </div>
