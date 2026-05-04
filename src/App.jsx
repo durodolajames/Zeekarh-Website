@@ -235,6 +235,159 @@ function AnimBlock({ children, delay = "", className = "", style = {} }) {
   );
 }
 
+function DecorativeHeroCircles() {
+  return (
+    <>
+      <div className="hero-bg-circle" style={{ width: 420, height: 420, right: -120, top: -120, zIndex: 0 }} />
+      <div className="hero-bg-circle" style={{ width: 240, height: 240, left: -60, bottom: 40, zIndex: 0 }} />
+    </>
+  );
+}
+
+function EditorialPageShell({ eyebrow, title, intro, children, ctaLabel, onCtaClick }) {
+  return (
+    <>
+      <style>{`
+        .editorial-page {
+          background: #FFF8F2;
+          min-height: 100svh;
+        }
+        .editorial-hero {
+          position: relative;
+          overflow: hidden;
+          background:
+            radial-gradient(circle at 85% 20%, rgba(61,122,69,0.2) 0%, rgba(61,122,69,0) 34%),
+            linear-gradient(180deg, #1a2e1c 0%, #233926 100%);
+          padding: 9rem 2rem 5rem;
+        }
+        .editorial-hero-inner {
+          position: relative;
+          z-index: 1;
+          max-width: 760px;
+          margin: 0 auto;
+          text-align: center;
+        }
+        .editorial-eyebrow {
+          font-size: 0.62rem;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: rgba(245,222,200,0.38);
+          font-weight: 300;
+          margin-bottom: 1.2rem;
+        }
+        .editorial-title {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(2.2rem, 5vw, 4rem);
+          font-style: italic;
+          font-weight: 400;
+          color: #F5DEC8;
+          line-height: 1.12;
+          margin-bottom: 1rem;
+        }
+        .editorial-intro {
+          max-width: 560px;
+          margin: 0 auto;
+          font-size: 0.86rem;
+          font-weight: 300;
+          line-height: 1.9;
+          color: rgba(245,222,200,0.52);
+        }
+        .editorial-card-wrap {
+          margin-top: -2.5rem;
+          padding: 0 2rem 5rem;
+          position: relative;
+          z-index: 2;
+        }
+        .editorial-card {
+          max-width: 900px;
+          margin: 0 auto;
+          background: rgba(255,255,255,0.88);
+          border: 1px solid rgba(61,122,69,0.1);
+          box-shadow: 0 24px 80px rgba(26,46,28,0.1);
+          backdrop-filter: blur(14px);
+          border-radius: 28px;
+          overflow: hidden;
+        }
+        .editorial-card-header {
+          padding: 2rem 2rem 0;
+          display: flex;
+          justify-content: center;
+        }
+        .editorial-mark {
+          width: 70px;
+          height: 70px;
+          opacity: 0.26;
+        }
+        .editorial-card-body {
+          padding: 1rem 2rem 2.5rem;
+        }
+        .editorial-rich {
+          display: flex;
+          flex-direction: column;
+          gap: 1.6rem;
+        }
+        .editorial-rich p {
+          font-size: 0.84rem;
+          line-height: 1.95;
+          color: #4a5e4b;
+          font-weight: 300;
+        }
+        .editorial-rich strong {
+          color: #1a2e1c;
+          font-weight: 500;
+        }
+        .editorial-cta {
+          margin-top: 2.2rem;
+          display: flex;
+          justify-content: center;
+        }
+        @media (max-width: 640px) {
+          .editorial-hero {
+            padding: 8rem 1.25rem 4.5rem;
+          }
+          .editorial-card-wrap {
+            padding: 0 1rem 4rem;
+            margin-top: -2rem;
+          }
+          .editorial-card-header {
+            padding: 1.6rem 1.25rem 0;
+          }
+          .editorial-card-body {
+            padding: 0.8rem 1.25rem 2rem;
+          }
+        }
+      `}</style>
+
+      <section className="editorial-page">
+        <div className="editorial-hero">
+          <DecorativeHeroCircles />
+          <div className="editorial-hero-inner">
+            <AnimBlock><p className="editorial-eyebrow">{eyebrow}</p></AnimBlock>
+            <AnimBlock delay="d1"><h1 className="editorial-title">{title}</h1></AnimBlock>
+            <AnimBlock delay="d2"><p className="editorial-intro">{intro}</p></AnimBlock>
+          </div>
+        </div>
+
+        <div className="editorial-card-wrap">
+          <div className="editorial-card">
+            <div className="editorial-card-header">
+              <img src="/images/logo.svg" alt="" aria-hidden="true" className="editorial-mark" />
+            </div>
+            <div className="editorial-card-body">
+              <div className="editorial-rich">{children}</div>
+              {ctaLabel && onCtaClick && (
+                <div className="editorial-cta">
+                  <button className="btn-solid" onClick={onCtaClick}>{ctaLabel}</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 function ScrollFillTextSection() {
   const sectionRef = useRef(null);
   const fillRefs = useRef([]);
@@ -786,6 +939,12 @@ function HomePage({ setPage }) {
           display: grid; grid-template-columns: 1fr 1.1fr 1fr;
           gap: 2.5rem; align-items: center; position: relative;
         }
+        .scatter-mobile-grid {
+          display: none;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.9rem;
+          margin-top: 2rem;
+        }
         .scatter-col { display: flex; flex-direction: column; gap: 1.5rem; }
         .scatter-col.top { padding-top: 0; justify-content: flex-start; }
         .scatter-col.bottom { justify-content: flex-end; padding-top: 3rem; }
@@ -793,6 +952,7 @@ function HomePage({ setPage }) {
           border-radius: 16px; overflow: hidden;
           box-shadow: 0 12px 40px rgba(26,46,28,0.12);
           position: relative;
+          background: rgba(255,255,255,0.35);
         }
         .scatter-photo-inner {
           width: 100%; padding-top: 125%;
@@ -1135,7 +1295,9 @@ function HomePage({ setPage }) {
           .testi-grid { grid-template-columns: 1fr; }
           .consult-features { grid-template-columns: 1fr; }
           .scatter-inner { grid-template-columns: 1fr; }
+          .scatter-center { padding: 0; }
           .scatter-col.top, .scatter-col.bottom { display: none; }
+          .scatter-mobile-grid { display: grid; }
           .services-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 600px) {
@@ -1143,6 +1305,10 @@ function HomePage({ setPage }) {
           .stats-row { gap: 1.5rem; }
           .services-grid { grid-template-columns: 1fr; }
           .service-card { aspect-ratio: 4/3; }
+          .scatter-section { padding: 4.5rem 1rem; }
+          .scatter-inner { gap: 1.5rem; }
+          .scatter-mobile-grid { gap: 0.75rem; }
+          .scatter-photo { border-radius: 14px; }
         }
       `}</style>
 
@@ -1267,6 +1433,27 @@ expert attention</h2>
             <AnimBlock delay="d3">
               <button className="btn-solid" onClick={() => setPage("services")}>Explore treatments</button>
             </AnimBlock>
+            <div className="scatter-mobile-grid">
+              {[
+                { src: "/images/skinana1.jpeg", ratioClass: "wide" },
+                { src: "/images/Glow.jpeg", ratioClass: "tall" },
+                { src: "/images/Room.JPG", ratioClass: "tall" },
+                { src: "/images/skinana.jpg", ratioClass: "wide" },
+              ].map((image, index) => (
+                <AnimBlock key={image.src} delay={`d${(index % 4) + 1}`}>
+                  <div className="scatter-photo" style={{ width: "100%" }}>
+                    <div className={`scatter-photo-inner ${image.ratioClass}`}>
+                      <div className="scatter-photo-bg" style={{
+                        backgroundImage: `url('${image.src}')`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                      }} />
+                    </div>
+                  </div>
+                </AnimBlock>
+              ))}
+            </div>
           </div>
 
           {/* Right column — two staggered photos */}
@@ -1877,6 +2064,18 @@ function ContactPage() {
 function Footer({ setPage }) {
   return (
     <footer style={{ background: "#1a2e1c", borderTop: "1px solid rgba(245,222,200,0.06)", padding: "3rem 2rem" }}>
+      <style>{`
+        @media (max-width: 640px) {
+          .footer-legal-row {
+            justify-content: center !important;
+            text-align: center !important;
+          }
+          .footer-copy {
+            width: 100%;
+            text-align: center !important;
+          }
+        }
+      `}</style>
       <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.5rem", borderBottom: "1px solid rgba(245,222,200,0.08)", paddingBottom: "1.2rem" }}>
         <button onClick={() => setPage("home")} style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 400, color: "rgba(245,222,200,0.6)", background: "none", border: "none", cursor: "pointer" }}>Zeekarh Cosmetics</button>
         <div style={{ display: "flex", gap: "2rem" }}>
@@ -1923,55 +2122,82 @@ function Footer({ setPage }) {
           ))}
         </div>
       </div>
-      <div style={{ maxWidth: 1100, margin: "0.9rem auto 0", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.8rem", flexWrap: "wrap" }}>
+      <div className="footer-legal-row" style={{ maxWidth: 1100, margin: "0.9rem auto 0", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.8rem", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "0.9rem", flexWrap: "wrap" }}>
           <button onClick={() => setPage("privacy")} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.3)", background: "none", border: "none", cursor: "pointer", fontWeight: 300 }}>Privacy Policy</button>
           <button onClick={() => setPage("terms")} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.3)", background: "none", border: "none", cursor: "pointer", fontWeight: 300 }}>Terms & Conditions</button>
         </div>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.62rem", color: "rgba(245,222,200,0.2)", fontWeight: 300, whiteSpace: "pre-line", textAlign: "right" }}>
-          {"2026 Zeekarh Cosmetics, All Rights Reserved.\nMade by James Durodola"}
+        <p className="footer-copy" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.62rem", color: "rgba(245,222,200,0.2)", fontWeight: 300, whiteSpace: "pre-line", textAlign: "right" }}>
+          {"© 2026 Zeekarh Cosmetics. All rights reserved.\nMade by James Durodola"}
         </p>
       </div>
     </footer>
   );
 }
 
-function PrivacyPolicyPage() {
+function PrivacyPolicyPage({ setPage }) {
   return (
-    <section style={{ background: "#FFF8F2", minHeight: "100svh", padding: "8rem 2rem 5rem" }}>
-      <div style={{ maxWidth: 860, margin: "0 auto" }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,4vw,3.2rem)", fontStyle: "italic", color: "#1a2e1c", marginBottom: "1.2rem" }}>Privacy Policy</h1>
-        <p style={{ fontSize: "0.82rem", lineHeight: 1.9, color: "#4a5e4b", marginBottom: "1.4rem" }}>At Zeekarh Cosmetics, we respect your privacy and handle your personal data responsibly. Information submitted through our booking form is only used to process your request, contact you, and provide skincare consultation services.</p>
-        <p style={{ fontSize: "0.82rem", lineHeight: 1.9, color: "#4a5e4b", marginBottom: "1.4rem" }}>We do not sell personal information. We may use trusted third-party services for communication, scheduling, and analytics, all under appropriate safeguards. You can request access, correction, or deletion of your data by contacting us directly.</p>
-        <p style={{ fontSize: "0.82rem", lineHeight: 1.9, color: "#4a5e4b" }}>By using this website, you agree to this policy. We may update this page from time to time, and changes will apply from the date of publication.</p>
-      </div>
-    </section>
+    <EditorialPageShell
+      eyebrow="Your information"
+      title="Privacy, handled with care."
+      intro="Your trust matters. We only collect what is necessary to manage bookings, respond to enquiries, and deliver a smooth consultation experience."
+      ctaLabel="Book a consultation"
+      onCtaClick={() => setPage("contact")}
+    >
+      <AnimBlock>
+        <p><strong>What we collect.</strong> Information you submit through the website, including your name, email address, skin concerns, and any message you provide, is used only to process your enquiry and coordinate your consultation.</p>
+      </AnimBlock>
+      <AnimBlock delay="d1">
+        <p><strong>How we use it.</strong> We use your details to contact you, confirm bookings, prepare for your session, and improve how we communicate with clients. We do not sell your data or share it for unrelated marketing.</p>
+      </AnimBlock>
+      <AnimBlock delay="d2">
+        <p><strong>Third-party services.</strong> We may rely on trusted scheduling, communication, payment, or analytics providers when needed. Where those tools are used, they operate under their own security and privacy obligations.</p>
+      </AnimBlock>
+      <AnimBlock delay="d3">
+        <p><strong>Your choices.</strong> You may request access to, correction of, or deletion of your information by contacting Zeekarh Cosmetics directly. Continued use of the website means you accept the current version of this policy.</p>
+      </AnimBlock>
+    </EditorialPageShell>
   );
 }
 
-function TermsPage() {
+function TermsPage({ setPage }) {
   return (
-    <section style={{ background: "#FFF8F2", minHeight: "100svh", padding: "8rem 2rem 5rem" }}>
-      <div style={{ maxWidth: 860, margin: "0 auto" }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,4vw,3.2rem)", fontStyle: "italic", color: "#1a2e1c", marginBottom: "1.2rem" }}>Terms and Conditions</h1>
-        <p style={{ fontSize: "0.82rem", lineHeight: 1.9, color: "#4a5e4b", marginBottom: "1.4rem" }}>All services are provided by appointment only. Consultation fees are non-refundable unless otherwise stated. Treatment suitability is assessed case-by-case and recommendations are based on professional judgment and the information you provide.</p>
-        <p style={{ fontSize: "0.82rem", lineHeight: 1.9, color: "#4a5e4b", marginBottom: "1.4rem" }}>Clients are responsible for sharing accurate medical and skincare history. Results vary by individual, and no outcome can be guaranteed. Missed appointments or late cancellations may incur a fee where applicable.</p>
-        <p style={{ fontSize: "0.82rem", lineHeight: 1.9, color: "#4a5e4b" }}>By booking or using this website, you agree to these terms. We reserve the right to update these terms at any time.</p>
-      </div>
-    </section>
+    <EditorialPageShell
+      eyebrow="Before you book"
+      title="Clear terms, thoughtful service."
+      intro="Every appointment is shaped around safety, suitability, and personalised care. These terms set expectations for bookings, consultations, and treatment planning."
+      ctaLabel="Contact us"
+      onCtaClick={() => setPage("contact")}
+    >
+      <AnimBlock>
+        <p><strong>Appointments and fees.</strong> Services are offered by appointment only. Consultation fees are non-refundable unless stated otherwise, and treatment recommendations are always based on the information you provide and your practitioner’s professional assessment.</p>
+      </AnimBlock>
+      <AnimBlock delay="d1">
+        <p><strong>Your responsibilities.</strong> You are responsible for sharing accurate medical history, current skincare use, allergies, and any other information that may affect treatment suitability or aftercare guidance.</p>
+      </AnimBlock>
+      <AnimBlock delay="d2">
+        <p><strong>Results and outcomes.</strong> Skincare results vary from person to person. No specific outcome can be guaranteed, even when following a treatment plan or product routine consistently.</p>
+      </AnimBlock>
+      <AnimBlock delay="d3">
+        <p><strong>Cancellations and updates.</strong> Missed appointments or late cancellations may incur a fee where applicable. By using this website or booking a service, you agree to the current terms, which may be updated from time to time.</p>
+      </AnimBlock>
+    </EditorialPageShell>
   );
 }
 
 function NotFoundPage({ setPage }) {
   return (
-    <section style={{ background: "#1a2e1c", minHeight: "100svh", padding: "9rem 2rem 5rem", display: "grid", placeItems: "center" }}>
-      <div style={{ textAlign: "center", maxWidth: 620 }}>
-        <p style={{ fontSize: "0.62rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(245,222,200,0.35)", fontWeight: 300, marginBottom: "1.2rem" }}>Error</p>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.4rem,7vw,4.8rem)", fontStyle: "italic", color: "#F5DEC8", fontWeight: 400, marginBottom: "1rem" }}>404</h1>
-        <p style={{ fontSize: "0.88rem", lineHeight: 1.9, color: "rgba(245,222,200,0.55)", marginBottom: "2rem" }}>The page you are looking for does not exist or has moved.</p>
-        <button className="btn-solid" onClick={() => setPage("home")}>Return home</button>
-      </div>
-    </section>
+    <EditorialPageShell
+      eyebrow="Page not found"
+      title="This page slipped out of reach."
+      intro="The link may be outdated, the address may be incorrect, or the page may have moved."
+      ctaLabel="Return home"
+      onCtaClick={() => setPage("home")}
+    >
+      <AnimBlock>
+        <p><strong>404.</strong> The page you requested is not available right now. Use the main navigation or head back to the homepage to continue browsing Zeekarh Cosmetics.</p>
+      </AnimBlock>
+    </EditorialPageShell>
   );
 }
 
