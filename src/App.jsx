@@ -1466,7 +1466,7 @@ function HomePage({ setPage }) {
               <div className="scatter-photo" style={{ width: "90%" }}>
                 <div className="scatter-photo-inner">
                   <div className="scatter-photo-bg" style={{
-                    backgroundImage: "url('/images/Room.JPG')",
+                    backgroundImage: "url('/images/skinana2.jpeg')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -1496,7 +1496,7 @@ expert attention</h2>
               {[
                 { src: "/images/skinana1.jpeg", ratioClass: "wide" },
                 { src: "/images/Glow.jpeg", ratioClass: "tall" },
-                { src: "/images/Room.JPG", ratioClass: "tall" },
+                { src: "/images/skinana2.jpeg", ratioClass: "tall" },
                 { src: "/images/skinana.jpg", ratioClass: "wide" },
               ].map((image, index) => (
                 <AnimBlock key={image.src} delay={`d${(index % 4) + 1}`}>
@@ -2104,24 +2104,6 @@ function ContactPage() {
         .contact-hero { padding: 9rem 2rem 5rem; text-align: center; border-bottom: 1px solid rgba(245,222,200,0.06); }
         .contact-grid { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1.35fr 1.25fr; gap: 5rem; padding: 5rem 2rem; }
         .contact-info { display: flex; flex-direction: column; gap: 2.5rem; }
-        .contact-block { display: flex; flex-direction: column; gap: 0.5rem; }
-        .contact-lbl { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(245,222,200,0.3); font-weight: 300; margin-bottom: 0.3rem; }
-        .contact-val { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 400; color: rgba(245,222,200,0.75); }
-        .contact-sub-val { font-size: 0.78rem; font-weight: 300; color: rgba(245,222,200,0.4); line-height: 1.7; }
-        .contact-chips { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
-        .contact-chip {
-          width: 34px; height: 34px; border-radius: 999px;
-          display: inline-flex; align-items: center; justify-content: center;
-          color: rgba(245,222,200,0.72);
-          border: 1px solid rgba(245,222,200,0.18);
-          background: rgba(245,222,200,0.04);
-          transition: all 0.25s; text-decoration: none;
-        }
-        .contact-chip:hover {
-          color: #F5DEC8;
-          border-color: rgba(245,222,200,0.45);
-          background: rgba(245,222,200,0.08);
-        }
         .booking-card {
           background: rgba(245,222,200,0.04);
           border: 1px solid rgba(245,222,200,0.08);
@@ -2276,24 +2258,6 @@ function ContactPage() {
 
                 <p className="contact-note-highlight">✨ If you decide to book an in-clinic treatment afterwards, £20 from your consultation fee will be credited towards your treatment.</p>
                 <p className="contact-note-text" style={{ marginTop: "0.9rem" }}>To get the most out of your session, please have a list or clear photos of all the skincare products you're currently using.</p>
-              </div>
-              <div className="contact-block">
-                <p className="contact-lbl">Connect</p>
-                <div className="contact-chips">
-                  {CONTACT_LINKS.map(link => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target={link.href.startsWith("http") ? "_blank" : undefined}
-                      rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-                      aria-label={link.label}
-                      title={link.label}
-                      className="contact-chip"
-                    >
-                      {link.icon}
-                    </a>
-                  ))}
-                </div>
               </div>
             </div>
           </AnimBlock>
