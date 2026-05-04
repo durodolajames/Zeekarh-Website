@@ -244,13 +244,22 @@ function DecorativeHeroCircles() {
   );
 }
 
-function EditorialPageShell({ eyebrow, title, intro, children, ctaLabel, onCtaClick }) {
+function EditorialPageShell({
+  eyebrow,
+  title,
+  intro,
+  children,
+  ctaLabel,
+  onCtaClick,
+  secondaryCtaLabel,
+  onSecondaryCtaClick,
+}) {
   return (
     <>
       <style>{`
         .editorial-page {
           background: #FFF8F2;
-          min-height: 100svh;
+          min-height: 70svh;
         }
         .editorial-hero {
           position: relative;
@@ -258,7 +267,7 @@ function EditorialPageShell({ eyebrow, title, intro, children, ctaLabel, onCtaCl
           background:
             radial-gradient(circle at 85% 20%, rgba(61,122,69,0.2) 0%, rgba(61,122,69,0) 34%),
             linear-gradient(180deg, #1a2e1c 0%, #233926 100%);
-          padding: 9rem 2rem 5rem;
+          padding: 7.2rem 2rem 3.2rem;
         }
         .editorial-hero-inner {
           position: relative;
@@ -293,8 +302,8 @@ function EditorialPageShell({ eyebrow, title, intro, children, ctaLabel, onCtaCl
           color: rgba(245,222,200,0.52);
         }
         .editorial-card-wrap {
-          margin-top: -2.5rem;
-          padding: 0 2rem 5rem;
+          margin-top: -1.25rem;
+          padding: 0 2rem 3.6rem;
           position: relative;
           z-index: 2;
         }
@@ -307,6 +316,35 @@ function EditorialPageShell({ eyebrow, title, intro, children, ctaLabel, onCtaCl
           backdrop-filter: blur(14px);
           border-radius: 28px;
           overflow: hidden;
+        }
+        .editorial-btn {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.66rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #F5DEC8;
+          background: #1a2e1c;
+          border: 1px solid rgba(61,122,69,0.45);
+          padding: 0.86rem 1.7rem;
+          border-radius: 999px;
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+        .editorial-btn:hover {
+          color: white;
+          background: #3D7A45;
+          border-color: #3D7A45;
+          transform: translateY(-1px);
+        }
+        .editorial-btn.ghost {
+          color: #1a2e1c;
+          background: rgba(61,122,69,0.08);
+          border-color: rgba(61,122,69,0.26);
+        }
+        .editorial-btn.ghost:hover {
+          color: #1a2e1c;
+          background: rgba(61,122,69,0.16);
+          border-color: rgba(61,122,69,0.42);
         }
         .editorial-card-header {
           padding: 2rem 2rem 0;
@@ -337,23 +375,25 @@ function EditorialPageShell({ eyebrow, title, intro, children, ctaLabel, onCtaCl
           font-weight: 500;
         }
         .editorial-cta {
-          margin-top: 2.2rem;
+          margin-top: 1.6rem;
           display: flex;
           justify-content: center;
+          gap: 0.7rem;
+          flex-wrap: wrap;
         }
         @media (max-width: 640px) {
           .editorial-hero {
-            padding: 8rem 1.25rem 4.5rem;
+            padding: 6.5rem 1.25rem 2.6rem;
           }
           .editorial-card-wrap {
-            padding: 0 1rem 4rem;
-            margin-top: -2rem;
+            padding: 0 1rem 2.8rem;
+            margin-top: -1rem;
           }
           .editorial-card-header {
-            padding: 1.6rem 1.25rem 0;
+            padding: 1.4rem 1.25rem 0;
           }
           .editorial-card-body {
-            padding: 0.8rem 1.25rem 2rem;
+            padding: 0.7rem 1.25rem 1.6rem;
           }
         }
       `}</style>
@@ -375,11 +415,16 @@ function EditorialPageShell({ eyebrow, title, intro, children, ctaLabel, onCtaCl
             </div>
             <div className="editorial-card-body">
               <div className="editorial-rich">{children}</div>
-              {ctaLabel && onCtaClick && (
+              {(ctaLabel && onCtaClick) || (secondaryCtaLabel && onSecondaryCtaClick) ? (
                 <div className="editorial-cta">
-                  <button className="btn-solid" onClick={onCtaClick}>{ctaLabel}</button>
+                  {secondaryCtaLabel && onSecondaryCtaClick && (
+                    <button className="editorial-btn ghost" onClick={onSecondaryCtaClick}>{secondaryCtaLabel}</button>
+                  )}
+                  {ctaLabel && onCtaClick && (
+                    <button className="editorial-btn" onClick={onCtaClick}>{ctaLabel}</button>
+                  )}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
@@ -2186,11 +2231,21 @@ function TermsPage({ setPage }) {
 }
 
 function NotFoundPage({ setPage }) {
+  const goBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    setPage("home");
+  };
+
   return (
     <EditorialPageShell
       eyebrow="Page not found"
       title="This page slipped out of reach."
       intro="The link may be outdated, the address may be incorrect, or the page may have moved."
+      secondaryCtaLabel="Go back"
+      onSecondaryCtaClick={goBack}
       ctaLabel="Return home"
       onCtaClick={() => setPage("home")}
     >
@@ -2396,18 +2451,21 @@ function LoadingScreen({ onDone }) {
 }
 
 // ─── APP ───────────────────────────────────────────────────────────────────
+const VALID_PAGES = ["home", "about", "services", "contact", "privacy", "terms"];
+
+function resolvePageFromLocation() {
+  const hashRoute = window.location.hash.replace("#", "").trim().toLowerCase();
+  const pathRoute = window.location.pathname.replace(/^\/+|\/+$/g, "").trim().toLowerCase();
+  const candidate = hashRoute || pathRoute || "home";
+  return VALID_PAGES.includes(candidate) ? candidate : "404";
+}
+
 export default function App() {
-  const [page, setPage] = useState(() => {
-    const hash = window.location.hash.replace("#", "").trim().toLowerCase();
-    return hash || "home";
-  });
+  const [page, setPage] = useState(() => resolvePageFromLocation());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const onHashChange = () => {
-      const hash = window.location.hash.replace("#", "").trim().toLowerCase();
-      setPage(hash || "home");
-    };
+    const onHashChange = () => setPage(resolvePageFromLocation());
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
