@@ -786,7 +786,9 @@ function HomePage({ setPage }) {
         }
         .hero-video-overlay {
           position: absolute; inset: 0;
-          background: linear-gradient(to bottom, rgba(26,46,28,0.72) 0%, rgba(26,46,28,0.55) 50%, rgba(26,46,28,0.78) 100%);
+          background:
+            radial-gradient(circle at 72% 22%, rgba(61,122,69,0.2) 0%, rgba(61,122,69,0) 36%),
+            linear-gradient(to bottom, rgba(12,24,15,0.88) 0%, rgba(12,24,15,0.66) 46%, rgba(12,24,15,0.9) 100%);
           z-index: 1;
         }
         .hero-bg-circle {
@@ -795,10 +797,11 @@ function HomePage({ setPage }) {
           border: 1px solid rgba(61,122,69,0.12);
           pointer-events: none;
         }
-        .hero-inner { max-width: 720px; margin: 0 auto; width: 100%; padding-top: 6rem; padding-bottom: 5rem; position: relative; z-index: 2; }
+        .hero-inner { max-width: 760px; margin: 0 auto; width: 100%; padding-top: 6rem; padding-bottom: 5rem; position: relative; z-index: 2; }
         .hero-eyebrow {
           font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
-          color: rgba(245,222,200,0.4); font-weight: 300; margin-bottom: 1.6rem;
+          color: rgba(245,222,200,0.72); font-weight: 300; margin-bottom: 1.35rem;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.35);
           opacity: 0; transform: translateY(16px);
           transition: all 0.6s ease 0.1s;
         }
@@ -807,15 +810,17 @@ function HomePage({ setPage }) {
           font-family: 'Playfair Display', serif;
           font-size: clamp(2.6rem, 7vw, 5rem);
           font-weight: 400; font-style: italic;
-          color: #F5DEC8; line-height: 1.1; margin-bottom: 1.6rem;
+          color: #F5DEC8; line-height: 1.08; margin-bottom: 1.35rem;
+          text-shadow: 0 6px 24px rgba(0,0,0,0.38);
           opacity: 0; transform: translateY(24px);
           transition: all 0.7s ease 0.25s;
         }
         .hero-h1.in { opacity: 1; transform: translateY(0); }
-        .hero-h1 em { color: #3D7A45; font-style: normal; }
+        .hero-h1 em { color: #7bc884; font-style: normal; }
         .hero-sub {
-          font-size: 0.85rem; font-weight: 300; line-height: 1.9;
-          color: rgba(245,222,200,0.55); max-width: 440px; margin-bottom: 2.8rem;
+          font-size: 0.96rem; font-weight: 300; line-height: 1.8;
+          color: rgba(245,222,200,0.84); max-width: 520px; margin-bottom: 2.2rem;
+          text-wrap: balance;
           opacity: 0; transform: translateY(20px);
           transition: all 0.7s ease 0.4s;
         }
@@ -837,12 +842,12 @@ function HomePage({ setPage }) {
         .btn-outline {
           font-family: 'Montserrat', sans-serif;
           font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
-          color: rgba(245,222,200,0.7); background: transparent;
-          border: 1px solid rgba(245,222,200,0.2);
+          color: rgba(245,222,200,0.9); background: rgba(245,222,200,0.05);
+          border: 1px solid rgba(245,222,200,0.38);
           padding: 0.9rem 2.2rem; border-radius: 100px; cursor: pointer;
           transition: all 0.3s;
         }
-        .btn-outline:hover { border-color: rgba(245,222,200,0.5); color: #F5DEC8; }
+        .btn-outline:hover { border-color: rgba(245,222,200,0.68); color: #F5DEC8; background: rgba(245,222,200,0.1); }
         .scroll-indicator {
           position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
           display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 2;
@@ -1335,6 +1340,8 @@ function HomePage({ setPage }) {
           .scatter-col.bottom { display: none; }
         }
         @media (max-width: 900px) {
+          .hero-inner { padding-top: 5.5rem; padding-bottom: 4.3rem; }
+          .hero-sub { font-size: 0.92rem; max-width: 100%; }
           .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
           .about-visual { display: none; }
           .testi-grid { grid-template-columns: 1fr; }
@@ -1346,6 +1353,13 @@ function HomePage({ setPage }) {
           .services-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 600px) {
+          .hero-section { padding: 0 1rem; }
+          .hero-inner { padding-top: 5.2rem; padding-bottom: 4rem; }
+          .hero-eyebrow { font-size: 0.57rem; letter-spacing: 0.24em; }
+          .hero-h1 { font-size: clamp(2.05rem, 10vw, 3rem); line-height: 1.12; margin-bottom: 1.05rem; }
+          .hero-sub { font-size: 0.88rem; line-height: 1.72; margin-bottom: 1.7rem; }
+          .hero-btns { gap: 0.7rem; }
+          .btn-solid, .btn-outline { width: 100%; justify-content: center; padding: 0.82rem 1.2rem; }
           .pricing-row { gap: 0.8rem; }
           .stats-row { gap: 1.5rem; }
           .services-grid { grid-template-columns: 1fr; }
@@ -1424,7 +1438,7 @@ function HomePage({ setPage }) {
             </div>
             <div className="about-card-float">
               <p className="float-label">Clients served</p>
-              <p className="float-val">100+</p>
+              <p className="float-val">600+</p>
               <p className="float-sub">Across UK, US & Nigeria</p>
             </div>
           </div>
