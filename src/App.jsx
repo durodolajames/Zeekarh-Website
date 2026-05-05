@@ -2528,14 +2528,10 @@ function Footer({ setPage }) {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div className="footer-bottom">
-          <div className="footer-legal-links">
-            <button className="footer-legal-btn" onClick={() => setPage("privacy")}>Privacy Policy</button>
-            <button className="footer-legal-btn" onClick={() => setPage("terms")}>Terms & Conditions</button>
-          </div>
-          <p className="footer-copy">
+        <div className="footer-bottom" style={{ justifyContent: "center" }}>
+          <p className="footer-copy" style={{ textAlign: "center" }}>
             © 2026 Zeekarh Cosmetics. All rights reserved.<br />
-            Made by James Durodola
+            Made by <a href="https://wa.me/2348091394796" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>James Durodola</a>
           </p>
         </div>
       </div>
