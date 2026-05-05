@@ -783,7 +783,6 @@ function HomePage({ setPage }) {
           object-fit: cover;
           z-index: 0;
           pointer-events: none;
-          transform: scale(0.88);
         }
         .hero-video-overlay {
           position: absolute; inset: 0;
@@ -1375,7 +1374,7 @@ function HomePage({ setPage }) {
       {/* HERO */}
       <section className="hero-section">
         <video className="hero-video" autoPlay muted loop playsInline preload="auto">
-          <source src="/video.mov" type="video/mp4" />
+          <source src="/video.webm" type="video/webm" />
         </video>
         <div className="hero-video-overlay" />
         <div className="hero-bg-circle" style={{ width: 600, height: 600, right: -200, top: -100, zIndex: 2 }} />
