@@ -783,6 +783,7 @@ function HomePage({ setPage }) {
           object-fit: cover;
           z-index: 0;
           pointer-events: none;
+          transform: scale(0.88);
         }
         .hero-video-overlay {
           position: absolute; inset: 0;
@@ -1373,7 +1374,9 @@ function HomePage({ setPage }) {
 
       {/* HERO */}
       <section className="hero-section">
-        <video className="hero-video" src="/images/video.mp4" autoPlay muted loop playsInline />
+        <video className="hero-video" autoPlay muted loop playsInline preload="auto">
+          <source src="/video.mov" type="video/mp4" />
+        </video>
         <div className="hero-video-overlay" />
         <div className="hero-bg-circle" style={{ width: 600, height: 600, right: -200, top: -100, zIndex: 2 }} />
         <div className="hero-bg-circle" style={{ width: 300, height: 300, left: -80, bottom: 80, zIndex: 2 }} />
@@ -1564,10 +1567,10 @@ expert attention</h2>
             <h2 className="meet-h2">Hi there! I'm Ngozi<br />(your skin's best friend).</h2>
           </AnimBlock>
           <AnimBlock delay="d2">
-            <p className="meet-body">I'm an Aesthetician based in Leeds, UK. I don't just treat skin — I help you understand it. I specialise in the management of inflammatory conditions like acne, rosacea, and pigmentation. Whether we're meeting for an in-person treatment or an online consultation, my goal is to cut through the noise of the retail market and build a tailored skincare routine and treatment plan that actually work for your unique concerns.</p>
+            <p className="meet-body">I'm an Aesthetician based in Leeds, UK. I don't just treat skin, I help you understand it. I specialise in the management of inflammatory conditions like acne, rosacea, and pigmentation. Whether we're meeting for an in-person treatment or an online consultation, my goal is to cut through the noise of the retail market and build a tailored skincare routine and treatment plan that actually work for your unique concerns.</p>
           </AnimBlock>
           <AnimBlock delay="d3">
-            <p className="meet-body">With over six years of experience in hands-on clinical treatments and product curation, I'll say — you've found the right person.</p>
+            <p className="meet-body">With over six years of experience in hands-on clinical treatments and product curation, I'll say you've found the right person.</p>
           </AnimBlock>
           <AnimBlock delay="d4">
             <button className="meet-btn" onClick={() => setPage("about")}>
@@ -1641,10 +1644,10 @@ expert attention</h2>
             </div>
           </AnimBlock>
           <AnimBlock delay="d1"><h2 className="consult-h2">Your skin deserves expert attention.</h2></AnimBlock>
-          <AnimBlock delay="d2"><p className="consult-sub">Begin your skincare journey with a virtual consultation — a comprehensive, personalised session designed to understand your skin deeply and set you on the right path.</p></AnimBlock>
+          <AnimBlock delay="d2"><p className="consult-sub">Begin your skincare journey with a virtual consultation. A comprehensive, personalised session designed to understand your skin deeply and set you on the right path.</p></AnimBlock>
           <AnimBlock delay="d3">
             <div className="pricing-row">
-              {[{ flag: "gb", label: "UK", val: "£70" }, { flag: "us", label: "US", val: "$87" }, { flag: "ng", label: "NG", val: "₦100k" }].map(p => (
+              {[{ flag: "gb", label: "UK", val: "£70" }, { flag: "us", label: "US", val: "$87" }].map(p => (
                 <div key={p.label} className="price-chip">
                   <img className="price-flag" src={`https://flagcdn.com/w40/${p.flag}.png`} alt={p.label} style={{ width: 28, height: "auto", borderRadius: 3, display: "block" }} />
                   <span className="price-currency">{p.label}</span>
@@ -1895,7 +1898,7 @@ function AboutPage({ setPage }) {
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(2.2rem,4vw,3.5rem)", fontWeight: 400, color: "#F5DEC8", lineHeight: 1.15, marginBottom: "0.5rem" }}>Hi there! I'm Ngozi (your skin's best friend).</h1>
           <p style={{ fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#3D7A45", fontWeight: 300, marginBottom: "1.8rem" }}>Founder & Lead Aesthetician</p>
           <div style={{ width: 32, height: 1, background: "rgba(245,222,200,0.15)", marginBottom: "1.8rem" }} />
-          <p style={{ fontSize: "0.88rem", fontWeight: 300, lineHeight: 1.95, color: "rgba(245,222,200,0.55)", maxWidth: 420, marginBottom: "1rem" }}>I'm an Aesthetician based in Leeds, UK. I don't just treat skin - I help you understand it. I specialise in the management of inflammatory conditions like acne, rosacea, and pigmentation.</p>
+          <p style={{ fontSize: "0.88rem", fontWeight: 300, lineHeight: 1.95, color: "rgba(245,222,200,0.55)", maxWidth: 420, marginBottom: "1rem" }}>I'm an Aesthetician based in Leeds, UK. I don't just treat skin, I help you understand it. I specialise in the management of inflammatory conditions like acne, rosacea, and pigmentation.</p>
           <p style={{ fontSize: "0.88rem", fontWeight: 300, lineHeight: 1.95, color: "rgba(245,222,200,0.55)", maxWidth: 420 }}>Whether we're meeting for an in-person treatment or an online consultation, my goal is to cut through the noise of the retail market and build a tailored skincare routine and treatment plan that actually work for your unique concerns.</p>
         </div>
       </section>
@@ -1946,7 +1949,7 @@ function ServicesPage({ setPage }) {
   const filters = ["All", "Facials", "Peels", "Microneedling", "Consultation"];
 
   const services = [
-    { cat: "Consultation", title: "Virtual Skin Consultation", desc: "Comprehensive skin analysis with 8-month personalised routine and product recommendations tailored to your budget.", duration: "60 min", price: "£70 / $87 / ₦100k", tag: "Most popular" },
+    { cat: "Consultation", title: "Virtual Skin Consultation", desc: "Comprehensive skin analysis with 8-month personalised routine and product recommendations tailored to your budget.", duration: "60 min", price: "£70 / $87", tag: "Most popular" },
     { cat: "Facials", title: "Glass Skin Facial", desc: "Achieve a luminous, poreless complexion with this multi-step hydration and brightening treatment.", duration: "75 min", price: "Book for pricing" },
     { cat: "Facials", title: "Deep Cleanse Facial", desc: "A thorough purifying treatment targeting congestion, breakouts, and excess sebum production.", duration: "60 min", price: "Book for pricing" },
     { cat: "Facials", title: "Radiance Boost Facial", desc: "Vitamin C-infused brightening treatment designed to even skin tone and restore natural luminosity.", duration: "60 min", price: "Book for pricing" },
@@ -2250,10 +2253,6 @@ function ContactPage() {
                     <span className="contact-fee-country">🇺🇸 US</span>
                     <span className="contact-fee-value">$87</span>
                   </div>
-                  <div className="contact-fee-chip">
-                    <span className="contact-fee-country">🇳🇬 NG</span>
-                    <span className="contact-fee-value">₦100,000</span>
-                  </div>
                 </div>
 
                 <p className="contact-note-highlight">✨ If you decide to book an in-clinic treatment afterwards, £20 from your consultation fee will be credited towards your treatment.</p>
@@ -2278,6 +2277,12 @@ function ContactPage() {
 
 // ─── FOOTER ────────────────────────────────────────────────────────────────
 function Footer({ setPage }) {
+  const businessHours = [
+    { day: "Monday to Friday", hours: "6:00 pm - 7:30 pm" },
+    { day: "Saturday", hours: "12:00 pm - 6:00 pm" },
+    { day: "Sunday", hours: "1:00 pm - 6:00 pm" },
+  ];
+
   return (
     <footer style={{ background: "#1a2e1c", borderTop: "1px solid rgba(245,222,200,0.06)", padding: "3rem 2rem" }}>
       <style>{`
@@ -2288,6 +2293,13 @@ function Footer({ setPage }) {
           }
           .footer-copy {
             width: 100%;
+            text-align: center !important;
+          }
+          .footer-info-grid {
+            flex-direction: column !important;
+            text-align: center !important;
+          }
+          .footer-info-item {
             text-align: center !important;
           }
         }
@@ -2338,6 +2350,45 @@ function Footer({ setPage }) {
           ))}
         </div>
       </div>
+
+      {/* Footer Info Section */}
+      <div className="footer-info-grid" style={{ maxWidth: 1100, margin: "2rem auto 0", display: "flex", justifyContent: "space-between", gap: "2.5rem", paddingBottom: "2rem", borderBottom: "1px solid rgba(245,222,200,0.08)" }}>
+        {/* Contact Info */}
+        <div className="footer-info-item" style={{ flex: 1 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.5)", fontWeight: 400, marginBottom: "0.8rem" }}>Contact</p>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.78rem", color: "rgba(245,222,200,0.75)", fontWeight: 300, lineHeight: 1.6 }}>
+            <a href="mailto:info@zeekarhcosmetics.com" style={{ color: "rgba(245,222,200,0.75)", textDecoration: "none", transition: "color 0.3s" }} onMouseEnter={e => e.target.style.color = "#F5DEC8"} onMouseLeave={e => e.target.style.color = "rgba(245,222,200,0.75)"}>
+              info@zeekarhcosmetics.com
+            </a>
+          </p>
+        </div>
+
+        {/* Address */}
+        <div className="footer-info-item" style={{ flex: 1 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.5)", fontWeight: 400, marginBottom: "0.8rem" }}>Address</p>
+          <a href="https://maps.app.goo.gl/zcZRg7XQmcptAKHL6" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "rgba(245,222,200,0.75)", transition: "color 0.3s" }} onMouseEnter={e => e.currentTarget.style.color = "#F5DEC8"} onMouseLeave={e => e.currentTarget.style.color = "rgba(245,222,200,0.75)"}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.78rem", color: "inherit", fontWeight: 300, lineHeight: 1.6, margin: 0 }}>
+              Unit 2 Viaduct Street<br />
+              Pudsey LS28 6AU<br />
+              Stanningley, Pudsey
+            </p>
+          </a>
+        </div>
+
+        {/* Opening Hours */}
+        <div className="footer-info-item" style={{ flex: 1 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.5)", fontWeight: 400, marginBottom: "0.8rem" }}>Opening Hours</p>
+          <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.75rem", color: "rgba(245,222,200,0.75)", fontWeight: 300, lineHeight: 1.5 }}>
+            {businessHours.map(({ day, hours }) => (
+              <div key={day} style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
+                <span style={{ color: "rgba(245,222,200,0.6)" }}>{day}</span>
+                <span>{hours}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="footer-legal-row" style={{ maxWidth: 1100, margin: "0.9rem auto 0", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.8rem", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "0.9rem", flexWrap: "wrap" }}>
           <button onClick={() => setPage("privacy")} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.3)", background: "none", border: "none", cursor: "pointer", fontWeight: 300 }}>Privacy Policy</button>
