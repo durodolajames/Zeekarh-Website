@@ -2446,7 +2446,7 @@ function Footer({ setPage }) {
             align-items: flex-start;
             gap: 0.8rem;
           }
-          .footer-copy { text-align: left; }
+          .footer-copy { text-align: center; }
         }
       `}</style>
 
