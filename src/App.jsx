@@ -469,7 +469,7 @@ function ScrollFillTextSection() {
   const lines = [
     "Your skin is the first thing people notice.",
     "Taking care of it is not vanity,",
-    "it's confidence, self-respect,",
+    "it's confidence, self-love,",
     "and long-term value.",
   ];
 
@@ -2277,125 +2277,267 @@ function ContactPage() {
 // ─── FOOTER ────────────────────────────────────────────────────────────────
 function Footer({ setPage }) {
   const businessHours = [
-    { day: "Monday to Friday", hours: "6:00 pm - 7:30 pm" },
-    { day: "Saturday", hours: "12:00 pm - 6:00 pm" },
-    { day: "Sunday", hours: "1:00 pm - 6:00 pm" },
+    { day: "Mon – Fri", hours: "6:00 pm – 7:30 pm" },
+    { day: "Saturday", hours: "12:00 pm – 6:00 pm" },
+    { day: "Sunday", hours: "1:00 pm – 6:00 pm" },
   ];
 
   return (
-    <footer style={{ background: "#1a2e1c", borderTop: "1px solid rgba(245,222,200,0.06)", padding: "3rem 2rem" }}>
+    <footer>
       <style>{`
-        @media (max-width: 640px) {
-          .footer-legal-row {
-            justify-content: center !important;
-            text-align: center !important;
-          }
-          .footer-copy {
-            width: 100%;
-            text-align: center !important;
-          }
-          .footer-info-grid {
-            flex-direction: column !important;
-            text-align: center !important;
-          }
-          .footer-info-item {
-            text-align: center !important;
+        .footer-root {
+          background: #0e1f10;
+          border-top: 1px solid rgba(245,222,200,0.06);
+          padding: 5rem 2rem 2.5rem;
+          font-family: 'Montserrat', sans-serif;
+        }
+        .footer-grid {
+          max-width: 1100px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1.6fr 1fr 1fr 1fr;
+          gap: 3rem;
+          padding-bottom: 3.5rem;
+          border-bottom: 1px solid rgba(245,222,200,0.07);
+        }
+        .footer-brand-col {}
+        .footer-brand-name {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.25rem;
+          font-weight: 400;
+          color: rgba(245,222,200,0.85);
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          margin-bottom: 1rem;
+          display: block;
+          text-align: left;
+        }
+        .footer-brand-tagline {
+          font-size: 0.76rem;
+          font-weight: 300;
+          line-height: 1.85;
+          color: rgba(245,222,200,0.38);
+          max-width: 220px;
+          margin-bottom: 1.8rem;
+        }
+        .footer-socials {
+          display: flex;
+          gap: 0.55rem;
+        }
+        .footer-social-link {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba(245,222,200,0.55);
+          border: 1px solid rgba(245,222,200,0.12);
+          background: rgba(245,222,200,0.03);
+          transition: all 0.25s;
+          text-decoration: none;
+        }
+        .footer-social-link:hover {
+          color: #F5DEC8;
+          border-color: rgba(245,222,200,0.4);
+          background: rgba(245,222,200,0.07);
+          transform: translateY(-2px);
+        }
+        .footer-col-heading {
+          font-size: 0.6rem;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #3D7A45;
+          font-weight: 500;
+          margin-bottom: 1.2rem;
+        }
+        .footer-nav-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.7rem;
+        }
+        .footer-nav-btn {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.78rem;
+          font-weight: 300;
+          color: rgba(245,222,200,0.5);
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          text-align: left;
+          transition: color 0.25s;
+          line-height: 1.4;
+        }
+        .footer-nav-btn:hover { color: rgba(245,222,200,0.88); }
+        .footer-info-line {
+          font-size: 0.78rem;
+          font-weight: 300;
+          color: rgba(245,222,200,0.5);
+          line-height: 1.75;
+          text-decoration: none;
+          display: block;
+          transition: color 0.25s;
+        }
+        a.footer-info-line:hover { color: rgba(245,222,200,0.88); }
+        .footer-hours-row {
+          display: flex;
+          justify-content: space-between;
+          gap: 1rem;
+          font-size: 0.76rem;
+          font-weight: 300;
+          line-height: 1.8;
+        }
+        .footer-hours-day { color: rgba(245,222,200,0.38); }
+        .footer-hours-val { color: rgba(245,222,200,0.6); }
+        .footer-bottom {
+          max-width: 1100px;
+          margin: 2rem auto 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+        .footer-legal-links {
+          display: flex;
+          gap: 1.4rem;
+          flex-wrap: wrap;
+        }
+        .footer-legal-btn {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.6rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: rgba(245,222,200,0.22);
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-weight: 300;
+          padding: 0;
+          transition: color 0.25s;
+        }
+        .footer-legal-btn:hover { color: rgba(245,222,200,0.5); }
+        .footer-copy {
+          font-size: 0.62rem;
+          color: rgba(245,222,200,0.18);
+          font-weight: 300;
+          text-align: right;
+          line-height: 1.6;
+        }
+        @media (max-width: 900px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
           }
         }
+        @media (max-width: 560px) {
+          .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          .footer-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.8rem;
+          }
+          .footer-copy { text-align: left; }
+        }
       `}</style>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.5rem", borderBottom: "1px solid rgba(245,222,200,0.08)", paddingBottom: "1.2rem" }}>
-        <button onClick={() => setPage("home")} style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 400, color: "rgba(245,222,200,0.6)", background: "none", border: "none", cursor: "pointer" }}>Zeekarh Cosmetics</button>
-        <div style={{ display: "flex", gap: "2rem" }}>
-          {[["Home","home"],["About","about"],["Services","services"],["Contact","contact"]].map(([l, id]) => (
-            <button key={id} onClick={() => setPage(id)} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.62rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,222,200,0.3)", background: "none", border: "none", cursor: "pointer", fontWeight: 300, transition: "color 0.3s" }}
-              onMouseEnter={e => e.target.style.color = "rgba(245,222,200,0.65)"}
-              onMouseLeave={e => e.target.style.color = "rgba(245,222,200,0.3)"}>{l}</button>
-          ))}
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
-          {CONTACT_LINKS.map(link => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-              aria-label={link.label}
-              title={link.label}
-              style={{
-                width: 34,
-                height: 34,
-                borderRadius: 999,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "rgba(245,222,200,0.72)",
-                border: "1px solid rgba(245,222,200,0.18)",
-                background: "rgba(245,222,200,0.04)",
-                transition: "all 0.25s",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = "#F5DEC8";
-                e.currentTarget.style.borderColor = "rgba(245,222,200,0.45)";
-                e.currentTarget.style.background = "rgba(245,222,200,0.08)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = "rgba(245,222,200,0.72)";
-                e.currentTarget.style.borderColor = "rgba(245,222,200,0.18)";
-                e.currentTarget.style.background = "rgba(245,222,200,0.04)";
-              }}
-            >
-              {link.icon}
-            </a>
-          ))}
-        </div>
-      </div>
 
-      {/* Footer Info Section */}
-      <div className="footer-info-grid" style={{ maxWidth: 1100, margin: "2rem auto 0", display: "flex", justifyContent: "space-between", gap: "2.5rem", paddingBottom: "2rem", borderBottom: "1px solid rgba(245,222,200,0.08)" }}>
-        {/* Contact Info */}
-        <div className="footer-info-item" style={{ flex: 1 }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.5)", fontWeight: 400, marginBottom: "0.8rem" }}>Contact</p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.78rem", color: "rgba(245,222,200,0.75)", fontWeight: 300, lineHeight: 1.6 }}>
-            <a href="mailto:info@zeekarhcosmetics.com" style={{ color: "rgba(245,222,200,0.75)", textDecoration: "none", transition: "color 0.3s" }} onMouseEnter={e => e.target.style.color = "#F5DEC8"} onMouseLeave={e => e.target.style.color = "rgba(245,222,200,0.75)"}>
-              info@zeekarhcosmetics.com
-            </a>
+      <div className="footer-root">
+        <div className="footer-grid">
+
+          {/* ── Brand col ── */}
+          <div className="footer-brand-col">
+            <button className="footer-brand-name" onClick={() => setPage("home")}>
+              Zeekarh Cosmetics
+            </button>
+            <p className="footer-brand-tagline">
+              Clinical skincare rooted in science, delivered with care. Based in Leeds, UK.
+            </p>
+            <p className="footer-col-heading" style={{ marginBottom: "0.8rem" }}>Follow Us</p>
+            <div className="footer-socials">
+              {CONTACT_LINKS.filter(link => link.label !== "Call" && link.label !== "WhatsApp").map(link => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="footer-social-link"
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                  aria-label={link.label}
+                  title={link.label}
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Navigation col ── */}
+          <div>
+            <p className="footer-col-heading">Navigate</p>
+            <ul className="footer-nav-list">
+              {[["Home","home"],["About","about"],["Services","services"],["Contact","contact"],["Privacy Policy","privacy"],["Terms & Conditions","terms"]].map(([label, id]) => (
+                <li key={id}>
+                  <button className="footer-nav-btn" onClick={() => setPage(id)}>{label}</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ── Contact col ── */}
+          <div>
+            <p className="footer-col-heading">Get in Touch</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+              <a href="mailto:info@zeekarhcosmetics.com" className="footer-info-line">
+                info@zeekarhcosmetics.com
+              </a>
+              <a href="tel:+442045423996" className="footer-info-line">
+                +44 20 4542 3996
+              </a>
+              <a href="https://wa.me/442045423996" target="_blank" rel="noreferrer" className="footer-info-line">
+                WhatsApp us
+              </a>
+              <a href="https://maps.app.goo.gl/zcZRg7XQmcptAKHL6" target="_blank" rel="noreferrer" className="footer-info-line" style={{ marginTop: "0.4rem" }}>
+                Unit 2 Viaduct Street<br />
+                Pudsey LS28 6AU<br />
+                Stanningley, Leeds
+              </a>
+            </div>
+          </div>
+
+          {/* ── Hours col ── */}
+          <div>
+            <p className="footer-col-heading">Opening Hours</p>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {businessHours.map(({ day, hours }) => (
+                <div key={day} className="footer-hours-row">
+                  <span className="footer-hours-day">{day}</span>
+                  <span className="footer-hours-val">{hours}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── Bottom bar ── */}
+        <div className="footer-bottom">
+          <div className="footer-legal-links">
+            <button className="footer-legal-btn" onClick={() => setPage("privacy")}>Privacy Policy</button>
+            <button className="footer-legal-btn" onClick={() => setPage("terms")}>Terms & Conditions</button>
+          </div>
+          <p className="footer-copy">
+            © 2026 Zeekarh Cosmetics. All rights reserved.<br />
+            Made by James Durodola
           </p>
         </div>
-
-        {/* Address */}
-        <div className="footer-info-item" style={{ flex: 1 }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.5)", fontWeight: 400, marginBottom: "0.8rem" }}>Address</p>
-          <a href="https://maps.app.goo.gl/zcZRg7XQmcptAKHL6" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "rgba(245,222,200,0.75)", transition: "color 0.3s" }} onMouseEnter={e => e.currentTarget.style.color = "#F5DEC8"} onMouseLeave={e => e.currentTarget.style.color = "rgba(245,222,200,0.75)"}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.78rem", color: "inherit", fontWeight: 300, lineHeight: 1.6, margin: 0 }}>
-              Unit 2 Viaduct Street<br />
-              Pudsey LS28 6AU<br />
-              Stanningley, Pudsey
-            </p>
-          </a>
-        </div>
-
-        {/* Opening Hours */}
-        <div className="footer-info-item" style={{ flex: 1 }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.5)", fontWeight: 400, marginBottom: "0.8rem" }}>Opening Hours</p>
-          <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.75rem", color: "rgba(245,222,200,0.75)", fontWeight: 300, lineHeight: 1.5 }}>
-            {businessHours.map(({ day, hours }) => (
-              <div key={day} style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
-                <span style={{ color: "rgba(245,222,200,0.6)" }}>{day}</span>
-                <span>{hours}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="footer-legal-row" style={{ maxWidth: 1100, margin: "0.9rem auto 0", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.8rem", flexWrap: "wrap" }}>
-        <div style={{ display: "flex", gap: "0.9rem", flexWrap: "wrap" }}>
-          <button onClick={() => setPage("privacy")} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.3)", background: "none", border: "none", cursor: "pointer", fontWeight: 300 }}>Privacy Policy</button>
-          <button onClick={() => setPage("terms")} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,222,200,0.3)", background: "none", border: "none", cursor: "pointer", fontWeight: 300 }}>Terms & Conditions</button>
-        </div>
-        <p className="footer-copy" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.62rem", color: "rgba(245,222,200,0.2)", fontWeight: 300, whiteSpace: "pre-line", textAlign: "right" }}>
-          {"© 2026 Zeekarh Cosmetics. All rights reserved.\nMade by James Durodola"}
-        </p>
       </div>
     </footer>
   );
@@ -2675,10 +2817,9 @@ function LoadingScreen({ onDone }) {
 const VALID_PAGES = ["home", "about", "services", "contact", "privacy", "terms"];
 
 function resolvePageFromLocation() {
-  const hashRoute = window.location.hash.replace("#", "").trim().toLowerCase();
   const pathRoute = window.location.pathname.replace(/^\/+|\/+$/g, "").trim().toLowerCase();
-  const candidate = hashRoute || pathRoute || "home";
-  return VALID_PAGES.includes(candidate) ? candidate : "404";
+  if (pathRoute === "") return "home";
+  return VALID_PAGES.includes(pathRoute) ? pathRoute : "404";
 }
 
 export default function App() {
@@ -2686,15 +2827,15 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const onHashChange = () => setPage(resolvePageFromLocation());
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
+    const onPopState = () => setPage(resolvePageFromLocation());
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
   const changePage = (p) => {
     const next = String(p || "home").toLowerCase();
     setPage(next);
-    window.location.hash = next;
+    window.history.pushState(null, "", next === "home" ? "/" : `/${next}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
