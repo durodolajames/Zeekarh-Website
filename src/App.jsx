@@ -1375,6 +1375,8 @@ function HomePage({ setPage }) {
       <section className="hero-section">
         <video className="hero-video" autoPlay muted loop playsInline preload="auto">
           <source src="/video.webm" type="video/webm" />
+          <source src="/images/video.mp4" type="video/mp4" />
+          Your browser does not support video playback.
         </video>
         <div className="hero-video-overlay" />
         <div className="hero-bg-circle" style={{ width: 600, height: 600, right: -200, top: -100, zIndex: 2 }} />
@@ -1555,7 +1557,7 @@ expert attention</h2>
         <div className="meet-inner">
           <AnimBlock>
             <div className="meet-photo">
-              <img src="/images/Zee.jpg" alt="Ngozi — Founder & Lead Aesthetician at Zeekarh Cosmetics" />
+              <img src="/images/about_zeekarh.jpeg" alt="Ngozi — Founder & Lead Aesthetician at Zeekarh Cosmetics" />
             </div>
           </AnimBlock>
           <div className="meet-content">
@@ -1599,7 +1601,7 @@ expert attention</h2>
                   <div className="service-card-bg" style={{
                     backgroundImage: `url(${[
                       "/images/service_consultation.jpg",
-                      "/images/service_facials.jpg",
+                      "/images/skinana2.jpeg",
                       "/images/service_peels.jpg",
                       "/images/service_microneedling.jpg",
                     ][i]})`,
@@ -1890,7 +1892,7 @@ function AboutPage({ setPage }) {
 
       <section className="about-hero" style={{ paddingTop: "5rem" }}>
         <div className="about-hero-photo">
-          <img src="/images/Zee.jpg" alt="Ngozi - Founder and Lead Aesthetician at Zeekarh Cosmetics" />
+          <img src="/images/about_zeekarh.jpeg" alt="Ngozi - Founder and Lead Aesthetician at Zeekarh Cosmetics" />
         </div>
         <div className="about-hero-content">
           <p style={{ fontSize: "0.6rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(245,222,200,0.35)", fontWeight: 300, marginBottom: "1.2rem" }}>Meet your aesthetician</p>
@@ -2263,7 +2265,7 @@ function ContactPage() {
           <AnimBlock delay="d2">
             <div className="booking-card">
               <div className="booking-image-wrap">
-                <img className="booking-image" src="/images/Zee.jpg" alt="Zee - Lead Aesthetician" />
+                <img className="booking-image" src="/images/about_zeekarh.jpeg" alt="Zee - Lead Aesthetician" />
               </div>
               <button className="booking-btn" onClick={handleBookNow}>Book now</button>
             </div>
