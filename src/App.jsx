@@ -1603,7 +1603,7 @@ expert attention</h2>
                       "/images/service_consultation.jpg",
                       "/images/skinana2.jpeg",
                       "/images/service_peels.jpg",
-                      "/images/service_microneedling.jpg",
+                      "/images/service_microneedling.webp",
                     ][i]})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
