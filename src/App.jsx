@@ -1374,8 +1374,8 @@ function HomePage({ setPage }) {
       {/* HERO */}
       <section className="hero-section">
         <video className="hero-video" autoPlay muted loop playsInline preload="auto">
-          <source src="/video.webm" type="video/webm" />
-          <source src="/images/video.mp4" type="video/mp4" />
+          <source src="/videos/video.webm" type="video/webm" />
+          <source src="/videos/video.mp4" type="video/mp4" />
           Your browser does not support video playback.
         </video>
         <div className="hero-video-overlay" />
