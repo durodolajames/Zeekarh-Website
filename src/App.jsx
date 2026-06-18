@@ -1381,7 +1381,7 @@ function HomePage({ setPage }) {
         <div className="hero-bg-circle" style={{ width: 600, height: 600, right: -200, top: -100, zIndex: 2 }} />
         <div className="hero-bg-circle" style={{ width: 300, height: 300, left: -80, bottom: 80, zIndex: 2 }} />
         <div className="hero-inner">
-          <p className={`hero-eyebrow${heroVisible ? " in" : ""}`}>Zeekarh Cosmetics · Med Spa</p>
+          <p className={`hero-eyebrow${heroVisible ? " in" : ""}`}>Zeekarh Cosmetics · Aesthetic Clinic </p>
           <h1 className={`hero-h1${heroVisible ? " in" : ""}`}>
             Skin that tells your<br /><em>best story.</em>
           </h1>
