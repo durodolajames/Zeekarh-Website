@@ -53,3 +53,33 @@ zeekarh/
 ├── package.json
 └── vite.config.js
 ```
+
+## SEO Submission Checklist
+
+Before submitting to search engines, replace all `https://www.yourdomain.com` values in these files with your real live domain:
+
+- `index.html`
+- `public/robots.txt`
+- `public/sitemap.xml`
+
+Then deploy your site and submit it:
+
+1. Google Search Console
+  - Open https://search.google.com/search-console
+  - Add your domain property
+  - Verify ownership (DNS is recommended)
+  - Go to **Sitemaps** and submit: `https://yourdomain.com/sitemap.xml`
+
+2. Bing Webmaster Tools
+  - Open https://www.bing.com/webmasters
+  - Add your site
+  - Verify ownership
+  - Submit the same sitemap URL
+
+3. Request indexing
+  - In Google Search Console, use URL Inspection for your homepage and key pages, then click **Request Indexing**.
+
+Quick check after deploy:
+
+- `https://yourdomain.com/robots.txt` should load
+- `https://yourdomain.com/sitemap.xml` should load
