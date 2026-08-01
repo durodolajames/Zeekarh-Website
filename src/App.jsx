@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import BLOG_POSTS from "./data/blogPosts";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -568,6 +569,9 @@ function ScrollFillTextSection() {
 function Nav({ page, setPage }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const announcement = {
+    address: "Unit 2 Viaduct Street, Pudsey LS28 6AU, Stanningley, Leeds",
+  };
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 30);
@@ -579,14 +583,54 @@ function Nav({ page, setPage }) {
     { label: "Home", id: "home" },
     { label: "About", id: "about" },
     { label: "Services", id: "services" },
+    { label: "Blog", id: "blog" },
     { label: "Contact", id: "contact" },
   ];
 
   return (
     <>
       <style>{`
+        .announcement-bar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 210;
+          height: 34px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 1rem;
+          background: rgba(61,122,69,0.94);
+          border-bottom: 1px solid rgba(245,222,200,0.25);
+          color: #F5DEC8;
+          backdrop-filter: blur(10px) saturate(140%);
+          -webkit-backdrop-filter: blur(10px) saturate(140%);
+        }
+        .announcement-inner {
+          width: 100%;
+          max-width: 1280px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.7rem;
+          flex-wrap: wrap;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.58rem;
+          font-weight: 400;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+        }
+        .announcement-item {
+          color: #F5DEC8;
+          text-decoration: none;
+          opacity: 0.92;
+          transition: opacity 0.25s ease;
+        }
+        .announcement-item:hover { opacity: 1; }
+        .announcement-sep { color: rgba(245,222,200,0.7); }
         .nav-wrap {
-          position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+          position: fixed; top: 34px; left: 0; right: 0; z-index: 200;
           padding: 1.2rem 2rem;
           display: flex; align-items: center; justify-content: space-between;
           transition: all 0.4s ease;
@@ -667,10 +711,30 @@ function Nav({ page, setPage }) {
           cursor: pointer; margin-top: 1rem;
         }
         @media (max-width: 768px) {
+          .announcement-bar {
+            height: auto;
+            min-height: 34px;
+            padding: 0.4rem 0.75rem;
+          }
+          .announcement-inner {
+            font-size: 0.52rem;
+            gap: 0.5rem;
+            letter-spacing: 0.13em;
+            white-space: normal;
+            text-align: center;
+            line-height: 1.4;
+          }
+          .nav-wrap { top: 34px; }
           .nav-links-row, .nav-cta-btn { display: none; }
           .ham-btn { display: flex; }
         }
       `}</style>
+
+      <div className="announcement-bar" role="region" aria-label="Contact information">
+        <div className="announcement-inner">
+          <span className="announcement-item address">{announcement.address}</span>
+        </div>
+      </div>
 
       <nav className={`nav-wrap${scrolled ? " scrolled" : ""}`}>
         <button className="nav-logo-btn" onClick={() => { setPage("home"); setMenuOpen(false); }}>
@@ -2094,6 +2158,476 @@ function ServicesPage({ setPage }) {
   );
 }
 
+// ─── BLOG ──────────────────────────────────────────────────────────────────
+function BlogPage({ setPage, selectedSlug = "" }) {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [expandedSlug, setExpandedSlug] = useState(selectedSlug);
+  const [copiedSlug, setCopiedSlug] = useState("");
+
+  const getPostUrl = (slug) => `${window.location.origin}/blog/${slug}`;
+
+  const getShareLinks = (post) => {
+    const postUrl = getPostUrl(post.slug);
+    const encodedUrl = encodeURIComponent(postUrl);
+    const encodedTitle = encodeURIComponent(post.title);
+    return {
+      whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
+      x: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      postUrl,
+    };
+  };
+
+  const handleCopyLink = async (post) => {
+    try {
+      await navigator.clipboard.writeText(getPostUrl(post.slug));
+      setCopiedSlug(post.slug);
+      setTimeout(() => setCopiedSlug(""), 1800);
+    } catch {
+      setCopiedSlug("");
+    }
+  };
+
+  useEffect(() => {
+    if (!selectedSlug) {
+      setExpandedSlug("");
+      return;
+    }
+
+    const postExists = BLOG_POSTS.some((post) => post.slug === selectedSlug);
+    if (postExists) setExpandedSlug(selectedSlug);
+  }, [selectedSlug]);
+
+  const categories = ["All", ...new Set(BLOG_POSTS.map((post) => post.category))];
+  const visiblePosts = activeCategory === "All" ? BLOG_POSTS : BLOG_POSTS.filter((post) => post.category === activeCategory);
+
+  return (
+    <>
+      <style>{`
+        .blog-hero {
+          background:
+            radial-gradient(circle at 82% 18%, rgba(61,122,69,0.24) 0%, rgba(61,122,69,0) 38%),
+            #1a2e1c;
+          padding: 9.5rem 2rem 4.2rem;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .blog-hero-inner {
+          max-width: 760px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 1;
+        }
+        .blog-hero-eyebrow {
+          font-size: 0.62rem;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: rgba(245,222,200,0.38);
+          font-weight: 300;
+          margin-bottom: 1.2rem;
+        }
+        .blog-hero-title {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(2rem, 4.8vw, 3.5rem);
+          font-style: italic;
+          font-weight: 400;
+          color: #F5DEC8;
+          line-height: 1.15;
+          margin-bottom: 0.95rem;
+        }
+        .blog-hero-copy {
+          font-size: 0.86rem;
+          line-height: 1.9;
+          color: rgba(245,222,200,0.5);
+          font-weight: 300;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        .blog-filter-row {
+          margin-top: 2.25rem;
+          display: flex;
+          justify-content: center;
+          gap: 0.65rem;
+          flex-wrap: wrap;
+        }
+        .blog-filter-btn {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.64rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(245,222,200,0.55);
+          background: rgba(245,222,200,0.04);
+          border: 1px solid rgba(245,222,200,0.16);
+          padding: 0.52rem 1.05rem;
+          border-radius: 999px;
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+        .blog-filter-btn:hover {
+          color: rgba(245,222,200,0.9);
+          border-color: rgba(245,222,200,0.4);
+        }
+        .blog-filter-btn.active {
+          color: white;
+          background: #3D7A45;
+          border-color: #3D7A45;
+        }
+        .blog-list-section {
+          background: #FFF8F2;
+          padding: 4rem 2rem 5rem;
+        }
+        .blog-list-inner {
+          max-width: 980px;
+          margin: 0 auto;
+          display: grid;
+          gap: 1rem;
+        }
+        .blog-card {
+          background: white;
+          border: 1px solid rgba(61,122,69,0.12);
+          border-radius: 18px;
+          box-shadow: 0 10px 30px rgba(26,46,28,0.06);
+          padding: 1.45rem;
+        }
+        .blog-meta {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+          flex-wrap: wrap;
+          margin-bottom: 0.7rem;
+        }
+        .blog-chip {
+          font-size: 0.56rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: #3D7A45;
+          background: rgba(61,122,69,0.08);
+          border: 1px solid rgba(61,122,69,0.2);
+          border-radius: 999px;
+          padding: 0.2rem 0.62rem;
+        }
+        .blog-date {
+          font-size: 0.62rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: rgba(74,94,75,0.72);
+        }
+        .blog-title {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(1.25rem, 2.1vw, 1.68rem);
+          line-height: 1.28;
+          color: #1a2e1c;
+          font-style: italic;
+          margin-bottom: 0.62rem;
+          font-weight: 400;
+        }
+        .blog-excerpt {
+          font-size: 0.84rem;
+          line-height: 1.85;
+          color: #4a5e4b;
+          font-weight: 300;
+        }
+        .blog-content-image {
+          width: 100%;
+          max-width: 920px;
+          display: block;
+          margin: 1.6rem auto;
+          border-radius: 18px;
+          object-fit: cover;
+          box-shadow: 0 18px 40px rgba(26,46,28,0.12);
+        }
+        .blog-expand {
+          margin-top: 1rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.64rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: #1a2e1c;
+          background: rgba(61,122,69,0.1);
+          border: 1px solid rgba(61,122,69,0.22);
+          border-radius: 999px;
+          padding: 0.56rem 1.05rem;
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+        .blog-expand:hover {
+          background: rgba(61,122,69,0.18);
+          border-color: rgba(61,122,69,0.35);
+        }
+        .blog-details {
+          margin-top: 1rem;
+          padding-top: 0.95rem;
+          border-top: 1px solid rgba(61,122,69,0.12);
+          display: grid;
+          gap: 0.72rem;
+        }
+        .blog-details p {
+          font-size: 0.82rem;
+          line-height: 1.85;
+          color: #4a5e4b;
+          font-weight: 300;
+        }
+        .blog-subheading {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.08rem;
+          font-style: italic;
+          font-weight: 500;
+          color: #1a2e1c;
+          margin-top: 0.2rem;
+          line-height: 1.35;
+        }
+        .blog-share-row {
+          margin-top: 0.6rem;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.45rem;
+        }
+        .blog-share-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.58rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #1a2e1c;
+          text-decoration: none;
+          background: rgba(61,122,69,0.08);
+          border: 1px solid rgba(61,122,69,0.22);
+          border-radius: 999px;
+          padding: 0.44rem 0.78rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .blog-share-btn:hover {
+          background: rgba(61,122,69,0.16);
+          border-color: rgba(61,122,69,0.36);
+        }
+        .blog-copy-note {
+          font-size: 0.58rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #3D7A45;
+          align-self: center;
+          margin-left: 0.2rem;
+        }
+        .blog-empty {
+          text-align: center;
+          font-size: 0.84rem;
+          line-height: 1.8;
+          color: #4a5e4b;
+          padding: 1.2rem;
+          border-radius: 14px;
+          border: 1px dashed rgba(61,122,69,0.26);
+          background: rgba(61,122,69,0.04);
+        }
+        .blog-cta {
+          background: #1a2e1c;
+          padding: 5rem 2rem 6rem;
+          text-align: center;
+        }
+        .blog-cta-eyebrow {
+          font-size: 0.62rem;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: rgba(245,222,200,0.35);
+          font-weight: 300;
+          margin-bottom: 1.2rem;
+        }
+        .blog-cta-title {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+          font-style: italic;
+          font-weight: 400;
+          color: #F5DEC8;
+          line-height: 1.2;
+          margin-bottom: 1rem;
+        }
+        .blog-cta-copy {
+          font-size: 0.85rem;
+          font-weight: 300;
+          color: rgba(245,222,200,0.45);
+          line-height: 1.9;
+          max-width: 460px;
+          margin: 0 auto 2rem;
+        }
+        .blog-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.55rem;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.72rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #F5DEC8;
+          background: linear-gradient(135deg, #3D7A45 0%, #2d5e34 100%);
+          border: 1px solid rgba(245,222,200,0.28);
+          border-radius: 999px;
+          padding: 1rem 2.5rem;
+          cursor: pointer;
+          box-shadow: 0 14px 30px rgba(0,0,0,0.28), 0 0 0 1px rgba(245,222,200,0.08) inset;
+          transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        .blog-cta-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 18px 34px rgba(0,0,0,0.32), 0 0 0 1px rgba(245,222,200,0.18) inset;
+          filter: brightness(1.05);
+        }
+        .blog-cta-btn-mark {
+          font-size: 0.74rem;
+          opacity: 0.72;
+        }
+        @media (max-width: 640px) {
+          .blog-hero {
+            padding: 8.4rem 1rem 3.8rem;
+          }
+          .blog-hero-eyebrow {
+            font-size: 0.58rem;
+            letter-spacing: 0.24em;
+            margin-bottom: 1rem;
+          }
+          .blog-hero-title {
+            font-size: clamp(1.85rem, 8.5vw, 2.45rem);
+            margin-bottom: 0.8rem;
+          }
+          .blog-hero-copy {
+            font-size: 0.83rem;
+            line-height: 1.85;
+          }
+          .blog-filter-row {
+            margin-top: 1.8rem;
+          }
+          .blog-list-section {
+            padding: 3rem 1rem 4rem;
+          }
+          .blog-card {
+            padding: 1.1rem;
+          }
+          .blog-cta {
+            padding: 4rem 1rem 4.75rem;
+          }
+          .blog-cta-title {
+            font-size: clamp(1.7rem, 7vw, 2.3rem);
+          }
+          .blog-cta-copy {
+            font-size: 0.83rem;
+            margin: 0 auto 1.85rem;
+          }
+        }
+      `}</style>
+
+      <section className="blog-hero">
+        <div className="hero-bg-circle" style={{ width: 400, height: 400, right: -120, top: -100, position: "absolute", zIndex: 0 }} />
+        <div className="blog-hero-inner">
+          <AnimBlock><p className="blog-hero-eyebrow">Zeekarh Journal</p></AnimBlock>
+          <AnimBlock delay="d1"><h1 className="blog-hero-title">Skincare insights you can actually use.</h1></AnimBlock>
+          <AnimBlock delay="d2"><p className="blog-hero-copy">Short, practical guidance on routines, acne care, treatment prep, and aftercare. Updated regularly by Zeekarh Cosmetics.</p></AnimBlock>
+          <div className="blog-filter-row">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`blog-filter-btn${activeCategory === category ? " active" : ""}`}
+                onClick={() => {
+                  setActiveCategory(category);
+                  if (category !== "All" && expandedSlug) {
+                    const expandedPost = BLOG_POSTS.find((post) => post.slug === expandedSlug);
+                    if (expandedPost && expandedPost.category !== category) {
+                      setExpandedSlug("");
+                      setPage("blog");
+                    }
+                  }
+                }}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="blog-list-section">
+        <div className="blog-list-inner">
+          {visiblePosts.length === 0 ? (
+            <div className="blog-empty">No posts in this category yet. Please check back shortly.</div>
+          ) : (
+            visiblePosts.map((post, index) => {
+              const expanded = expandedSlug === post.slug;
+              const shareLinks = getShareLinks(post);
+              return (
+                <AnimBlock key={post.slug} delay={`d${(index % 4) + 1}`}>
+                  <article className="blog-card">
+                    <div className="blog-meta">
+                      <span className="blog-chip">{post.category}</span>
+                      <span className="blog-date">{post.date} · {post.readMinutes} min read</span>
+                    </div>
+                    <h2 className="blog-title">{post.title}</h2>
+                    <p className="blog-excerpt">{post.excerpt}</p>
+                    <button
+                      className="blog-expand"
+                      onClick={() => {
+                        if (expanded) {
+                          setExpandedSlug("");
+                          setPage("blog", { scroll: false });
+                        } else {
+                          setExpandedSlug(post.slug);
+                          setPage(`blog/${post.slug}`, { scroll: false });
+                        }
+                      }}
+                    >
+                      {expanded ? "Hide article" : "Read article"}
+                    </button>
+                    {expanded && (
+                      <div className="blog-details">
+                        {post.body.map((paragraph, pIndex) => {
+                          const isHeading = paragraph.startsWith("## ");
+                          if (isHeading) {
+                            return <h3 key={`${post.slug}-heading-${pIndex}`} className="blog-subheading">{paragraph.replace(/^##\s+/, "")}</h3>;
+                          }
+                          const imageMatch = paragraph.match(/^!\[(.*?)\]\((.*?)\)$/);
+                          if (imageMatch) {
+                            const [, alt, src] = imageMatch;
+                            return <img key={`${post.slug}-image-${pIndex}`} className="blog-content-image" src={src} alt={alt} />;
+                          }
+                          return <p key={`${post.slug}-para-${pIndex}`}>{paragraph}</p>;
+                        })}
+                        <div className="blog-share-row">
+                          <a className="blog-share-btn" href={shareLinks.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
+                          <a className="blog-share-btn" href={shareLinks.x} target="_blank" rel="noreferrer">Share on X</a>
+                          <a className="blog-share-btn" href={shareLinks.facebook} target="_blank" rel="noreferrer">Facebook</a>
+                          <button className="blog-share-btn" onClick={() => handleCopyLink(post)}>Copy link</button>
+                          {copiedSlug === post.slug ? <span className="blog-copy-note">Copied</span> : null}
+                        </div>
+                      </div>
+                    )}
+                  </article>
+                </AnimBlock>
+              );
+            })
+          )}
+        </div>
+      </section>
+
+      <section className="blog-cta">
+        <AnimBlock><p className="blog-cta-eyebrow">Need personal advice?</p></AnimBlock>
+        <AnimBlock delay="d1"><h2 className="blog-cta-title">Get a routine built for your skin.</h2></AnimBlock>
+        <AnimBlock delay="d2"><p className="blog-cta-copy">Our consultations turn general skincare advice into a structured plan tailored to your concerns, lifestyle, and budget.</p></AnimBlock>
+        <AnimBlock delay="d3">
+          <button className="blog-cta-btn" onClick={() => setPage("contact")}>
+            <span className="blog-cta-btn-mark">✦</span>
+            Book a consultation
+            <span className="blog-cta-btn-mark">✦</span>
+          </button>
+        </AnimBlock>
+      </section>
+    </>
+  );
+}
+
 // ─── CONTACT ───────────────────────────────────────────────────────────────
 function ContactPage() {
   function handleBookNow() {
@@ -2484,7 +3018,7 @@ function Footer({ setPage }) {
           <div>
             <p className="footer-col-heading">Navigate</p>
             <ul className="footer-nav-list">
-              {[["Home","home"],["About","about"],["Services","services"],["Contact","contact"],["Privacy Policy","privacy"],["Terms & Conditions","terms"]].map(([label, id]) => (
+              {[["Home","home"],["About","about"],["Services","services"],["Blog","blog"],["Contact","contact"],["Privacy Policy","privacy"],["Terms & Conditions","terms"]].map(([label, id]) => (
                 <li key={id}>
                   <button className="footer-nav-btn" onClick={() => setPage(id)}>{label}</button>
                 </li>
@@ -2811,11 +3345,23 @@ function LoadingScreen({ onDone }) {
 }
 
 // ─── APP ───────────────────────────────────────────────────────────────────
-const VALID_PAGES = ["home", "about", "services", "contact", "privacy", "terms"];
+const VALID_PAGES = ["home", "about", "services", "blog", "contact", "privacy", "terms"];
 
 function resolvePageFromLocation() {
   const pathRoute = window.location.pathname.replace(/^\/+|\/+$/g, "").trim().toLowerCase();
   if (pathRoute === "") return "home";
+
+  if (pathRoute === "blog") return "blog";
+
+  if (pathRoute.startsWith("blog/")) {
+    const parts = pathRoute.split("/");
+    const slug = parts[1];
+    if (parts.length === 2 && BLOG_POSTS.some((post) => post.slug === slug)) {
+      return `blog/${slug}`;
+    }
+    return "404";
+  }
+
   return VALID_PAGES.includes(pathRoute) ? pathRoute : "404";
 }
 
@@ -2829,30 +3375,161 @@ export default function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  const changePage = (p) => {
+  useEffect(() => {
+    const descriptionTag = document.querySelector('meta[name="description"]') || document.createElement("meta");
+    if (!descriptionTag.getAttribute("name")) descriptionTag.setAttribute("name", "description");
+    if (!descriptionTag.parentNode) document.head.appendChild(descriptionTag);
+
+    const isBlogPost = page.startsWith("blog/");
+    const currentPage = isBlogPost ? "blog" : page;
+
+    const metaByPage = {
+      home: {
+        title: "Zeekarh Cosmetics | Aesthetic Clinic in Leeds",
+        description: "Clinical skincare treatments, bespoke facials, and consultations by Zeekarh Cosmetics.",
+      },
+      about: {
+        title: "About | Zeekarh Cosmetics",
+        description: "Meet Zeekarh Cosmetics founder Ngozi and learn the philosophy behind our skincare approach.",
+      },
+      services: {
+        title: "Services | Zeekarh Cosmetics",
+        description: "Explore facials, peels, microneedling, and personalized consultations tailored to your skin.",
+      },
+      blog: {
+        title: "Blog | Zeekarh Cosmetics",
+        description: "Skincare guides, treatment tips, and practical advice from Zeekarh Cosmetics.",
+      },
+      contact: {
+        title: "Contact | Zeekarh Cosmetics",
+        description: "Book your consultation and start your skincare journey with Zeekarh Cosmetics.",
+      },
+      privacy: {
+        title: "Privacy Policy | Zeekarh Cosmetics",
+        description: "Read how Zeekarh Cosmetics handles your personal information and booking data.",
+      },
+      terms: {
+        title: "Terms & Conditions | Zeekarh Cosmetics",
+        description: "Review booking terms, consultation policies, and treatment conditions at Zeekarh Cosmetics.",
+      },
+      "404": {
+        title: "Page Not Found | Zeekarh Cosmetics",
+        description: "The page you requested could not be found.",
+      },
+    };
+
+    let nextMeta = metaByPage[currentPage] || metaByPage["404"];
+
+    if (isBlogPost) {
+      const slug = page.slice("blog/".length);
+      const post = BLOG_POSTS.find((item) => item.slug === slug);
+      if (post) {
+        nextMeta = {
+          title: `${post.title} | Zeekarh Cosmetics Blog`,
+          description: post.excerpt,
+        };
+      }
+    }
+
+    document.title = nextMeta.title;
+    descriptionTag.setAttribute("content", nextMeta.description);
+  }, [page]);
+
+  useEffect(() => {
+    const scriptId = "zeekarh-jsonld";
+    const existing = document.getElementById(scriptId);
+    let payload = null;
+    const origin = window.location.origin;
+
+    if (page === "blog") {
+      payload = {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        name: "Zeekarh Journal",
+        description: "Skincare guides, treatment tips, and practical advice from Zeekarh Cosmetics.",
+        url: `${origin}/blog`,
+        inLanguage: "en-GB",
+        blogPost: BLOG_POSTS.map((post) => ({
+          "@type": "BlogPosting",
+          headline: post.title,
+          url: `${origin}/blog/${post.slug}`,
+          datePublished: post.publishedAt || undefined,
+          articleSection: post.category,
+          description: post.excerpt,
+        })),
+      };
+    }
+
+    if (page.startsWith("blog/")) {
+      const slug = page.slice("blog/".length);
+      const post = BLOG_POSTS.find((item) => item.slug === slug);
+      if (post) {
+        payload = {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          url: `${origin}/blog/${post.slug}`,
+          datePublished: post.publishedAt || undefined,
+          articleSection: post.category,
+          isPartOf: {
+            "@type": "Blog",
+            name: "Zeekarh Journal",
+            url: `${origin}/blog`,
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "Zeekarh Cosmetics",
+            url: origin,
+          },
+        };
+      }
+    }
+
+    if (!payload) {
+      if (existing) existing.remove();
+      return;
+    }
+
+    const nextScript = existing || document.createElement("script");
+    nextScript.id = scriptId;
+    nextScript.setAttribute("type", "application/ld+json");
+    nextScript.textContent = JSON.stringify(payload);
+    if (!existing) document.head.appendChild(nextScript);
+  }, [page]);
+
+  const changePage = (p, options = {}) => {
+    const { scroll = true } = options;
     const next = String(p || "home").toLowerCase();
     setPage(next);
     window.history.pushState(null, "", next === "home" ? "/" : `/${next}`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (scroll) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
+
+  const isBlogPostRoute = page.startsWith("blog/");
+  const navPage = isBlogPostRoute ? "blog" : page;
+  const selectedBlogSlug = isBlogPostRoute ? page.slice("blog/".length) : "";
 
   const pages = {
     home: HomePage,
     about: AboutPage,
     services: ServicesPage,
+    blog: BlogPage,
     contact: ContactPage,
     privacy: PrivacyPolicyPage,
     terms: TermsPage,
   };
-  const PageComp = pages[page] || NotFoundPage;
+  const PageComp = pages[navPage] || NotFoundPage;
 
   return (
     <>
       <style>{GS}</style>
       {loading && <LoadingScreen onDone={() => setLoading(false)} />}
-      {!loading && <Nav page={page} setPage={changePage} />}
+      {!loading && <Nav page={navPage} setPage={changePage} />}
       <main style={{ visibility: loading ? "hidden" : "visible" }}>
-        <PageComp setPage={changePage} />
+        <PageComp setPage={changePage} selectedSlug={selectedBlogSlug} />
       </main>
       {!loading && <Footer setPage={changePage} />}
     </>

@@ -47,12 +47,47 @@ Place your images in the `public/images/` folder and reference them as `/images/
 zeekarh/
 ├── public/              ← static assets (add your images here)
 ├── src/
+│   ├── content/blog/    ← markdown blog posts
+│   ├── data/blogPosts.js← markdown loader + frontmatter parser
 │   ├── App.jsx          ← all pages and components
 │   └── main.jsx         ← React entry point
 ├── index.html
 ├── package.json
 └── vite.config.js
 ```
+
+## Adding Blog Posts (Markdown)
+
+Create a new file in `src/content/blog/` using a URL-safe filename. The filename becomes the post slug.
+
+Example:
+
+- `src/content/blog/my-new-post.md` -> `/blog/my-new-post`
+
+Use this template:
+
+```md
+---
+title: Your blog title
+category: Education
+date: July 2026
+publishedAt: 2026-07-26
+readMinutes: 5
+excerpt: One short summary sentence for previews and SEO.
+---
+First paragraph of the post.
+
+Second paragraph of the post.
+
+Third paragraph of the post.
+```
+
+Notes:
+
+- Keep a blank line between paragraphs.
+- `publishedAt` should use `YYYY-MM-DD` for proper sorting and structured data.
+- `excerpt` is used in blog cards and metadata.
+- After adding a post, run `npm run build` to verify everything compiles.
 
 ## SEO Submission Checklist
 
